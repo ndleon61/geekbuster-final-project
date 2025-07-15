@@ -9,6 +9,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from api.models import db, User, FavoriteMovie
 from api.utils import generate_sitemap, APIException
 
+from api.services.omdb import search_movies
+
 api = Blueprint('api', __name__)
 CORS(api)
 
@@ -88,3 +90,12 @@ def delete_favorite(id):
     db.session.delete(favorite)
     db.session.commit()
     return jsonify({"msg": "Favorite deleted"}), 200
+
+@api.route('/movies/search', methods = ['GET'])
+def movie_search():
+    title = request.args.get('title')
+    if not title:
+        return jsonify({"msg": "Missing 'title' query parem"}), 400
+    
+    result = search_movies(title)
+    return jsonify(result), 200

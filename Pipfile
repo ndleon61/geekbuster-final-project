@@ -21,6 +21,7 @@ flask-migrate = "*"
 python-dotenv = "*"
 flask-jwt-extended = "*"
 werkzeug = "*"
+requests = "*"
 
 [requires]
 python_version = "3.13"
