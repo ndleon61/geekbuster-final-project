@@ -9,7 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from api.models import db, User, FavoriteMovie
 from api.utils import generate_sitemap, APIException
 
-from api.services.omdb import search_movies
+from api.services.omdb import search_movies, get_movie_details
 
 api = Blueprint('api', __name__)
 CORS(api)
@@ -98,4 +98,14 @@ def movie_search():
         return jsonify({"msg": "Missing 'title' query parem"}), 400
     
     result = search_movies(title)
+    return jsonify(result), 200
+
+
+@api.route('/movies/<string:imdb_id>', methods=['GET'])
+def movie_detail(imdb_id):
+    result = get_movie_details(imdb_id)
+
+    if "Error" in result:
+        return jsonify({"msg": result["Error"]}), 404
+
     return jsonify(result), 200
