@@ -53,6 +53,20 @@ def login():
     return jsonify(access_token=token), 200
 
 
+@api.route('/favorites/<int:id>', methods=['GET'])
+@jwt_required()
+def get_favorite(id):
+    user_id = get_jwt_identity()
+    favorite = FavoriteMovie.query.get(id)
+
+    if not favorite:
+        return jsonify({"msg": "Favorite not found"}), 404
+
+    if favorite.user_id != int(user_id):
+        return jsonify({"msg": "Unauthorized"}), 403
+
+    return jsonify(favorite.serialize()), 200
+
 @api.route('/favorites', methods=['GET'])
 @jwt_required()
 def get_favorites():
@@ -69,6 +83,11 @@ def add_favorite():
         return jsonify({"msg": "imdb_id and title are required"}), 400
 
     user_id = get_jwt_identity()
+    
+    existing_fav = FavoriteMovie.query.filter_by(imdb_id=data["imdb_id"], user_id = user_id).first()
+    if existing_fav:
+        return jsonify({"msg": "Movie already favorited"}), 409
+
     new_fav = FavoriteMovie(imdb_id=data["imdb_id"], title=data["title"], user_id=user_id)
     db.session.add(new_fav)
     db.session.commit()

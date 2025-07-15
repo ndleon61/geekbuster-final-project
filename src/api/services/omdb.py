@@ -7,7 +7,7 @@ def search_movies(title):
     if not OMDB_API_KEY:
         raise Exception("OMDB_API_KEY is missing")
     
-    url = f"http://www.omdbapi.com/?apikey={OMDB_API_KEY}&i={title}"
+    url = f"http://www.omdbapi.com/?apikey={OMDB_API_KEY}&s={title}"
     response = requests.get(url)
 
     if response.status_code != 200:
