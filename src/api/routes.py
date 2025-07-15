@@ -69,6 +69,11 @@ def add_favorite():
         return jsonify({"msg": "imdb_id and title are required"}), 400
 
     user_id = get_jwt_identity()
+    
+    existing_fav = FavoriteMovie.query.filter_by(imdb_id=data["imdb_id"], user_id = user_id).first()
+    if existing_fav:
+        return jsonify({"msg": "Movie already favorited"}), 409
+
     new_fav = FavoriteMovie(imdb_id=data["imdb_id"], title=data["title"], user_id=user_id)
     db.session.add(new_fav)
     db.session.commit()
