@@ -53,6 +53,20 @@ def login():
     return jsonify(access_token=token), 200
 
 
+@api.route('/favorites/<int:id>', methods=['GET'])
+@jwt_required()
+def get_favorite(id):
+    user_id = get_jwt_identity()
+    favorite = FavoriteMovie.query.get(id)
+
+    if not favorite:
+        return jsonify({"msg": "Favorite not found"}), 404
+
+    if favorite.user_id != int(user_id):
+        return jsonify({"msg": "Unauthorized"}), 403
+
+    return jsonify(favorite.serialize()), 200
+
 @api.route('/favorites', methods=['GET'])
 @jwt_required()
 def get_favorites():
