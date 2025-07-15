@@ -47,7 +47,7 @@ def login():
     if not user or not check_password_hash(user.password, data["password"]):
         return jsonify({"msg": "Invalid credentials"}), 401
 
-    token = create_access_token(identity=user.id)
+    token = create_access_token(identity= str(user.id))
     return jsonify(access_token=token), 200
 
 
@@ -72,3 +72,19 @@ def add_favorite():
     db.session.commit()
 
     return jsonify(new_fav.serialize()), 201
+
+@api.route('/favorites/<int:id>', methods=['DELETE'])
+@jwt_required()
+def delete_favorite(id):
+    user_id = get_jwt_identity()
+    favorite = FavoriteMovie.query.get(id)
+
+    if not favorite:
+        return jsonify({"msg": "Favorite not found"}), 404
+
+    if favorite.user_id != int(user_id):
+        return jsonify({"msg": "Unauthorized"}), 403
+
+    db.session.delete(favorite)
+    db.session.commit()
+    return jsonify({"msg": "Favorite deleted"}), 200
