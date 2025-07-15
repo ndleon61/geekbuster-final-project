@@ -1,22 +1,74 @@
 """
-This module takes care of starting the API Server, Loading the DB and Adding the endpoints
+This module handles API endpoints like signup, login, and favorites.
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
-from api.utils import generate_sitemap, APIException
+from flask import request, jsonify, Blueprint
 from flask_cors import CORS
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from api.models import db, User, FavoriteMovie
+from api.utils import generate_sitemap, APIException
 
 api = Blueprint('api', __name__)
-
-# Allow CORS requests to this API
 CORS(api)
 
-
-@api.route('/hello', methods=['POST', 'GET'])
+# Hello route (default)
+@api.route('/hello', methods=['GET'])
 def handle_hello():
+    return jsonify({"message": "Hello from the backend!"}), 200
 
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
+# Signup route
+@api.route('/signup', methods=['POST'])
+def signup():
+    data = request.get_json()
 
-    return jsonify(response_body), 200
+    if not data or not data.get("email") or not data.get("password"):
+        return jsonify({"msg": "Email and password are required"}), 400
+
+    if User.query.filter_by(email=data["email"]).first():
+        return jsonify({"msg": "User already exists"}), 400
+
+    hashed_pw = generate_password_hash(data["password"])
+    new_user = User(email=data["email"], password=hashed_pw, is_active=True)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"msg": "User created"}), 201
+
+# Login route
+@api.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+
+    if not data or not data.get("email") or not data.get("password"):
+        return jsonify({"msg": "Email and password are required"}), 400
+
+    user = User.query.filter_by(email=data["email"]).first()
+    if not user or not check_password_hash(user.password, data["password"]):
+        return jsonify({"msg": "Invalid credentials"}), 401
+
+    token = create_access_token(identity=user.id)
+    return jsonify(access_token=token), 200
+
+
+@api.route('/favorites', methods=['GET'])
+@jwt_required()
+def get_favorites():
+    user_id = get_jwt_identity()
+    favorites = FavoriteMovie.query.filter_by(user_id=user_id).all()
+    return jsonify([fav.serialize() for fav in favorites]), 200
+
+
+@api.route('/favorites', methods=['POST'])
+@jwt_required()
+def add_favorite():
+    data = request.get_json()
+    if not data or not data.get("imdb_id") or not data.get("title"):
+        return jsonify({"msg": "imdb_id and title are required"}), 400
+
+    user_id = get_jwt_identity()
+    new_fav = FavoriteMovie(imdb_id=data["imdb_id"], title=data["title"], user_id=user_id)
+    db.session.add(new_fav)
+    db.session.commit()
+
+    return jsonify(new_fav.serialize()), 201

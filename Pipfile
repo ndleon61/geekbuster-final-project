@@ -18,8 +18,8 @@ flask = "*"
 flask-cors = "*"
 flask-sqlalchemy = "*"
 flask-migrate = "*"
-flask-jwt-extended = "*"
 python-dotenv = "*"
+flask-jwt-extended = "*"
 werkzeug = "*"
 
 [requires]
