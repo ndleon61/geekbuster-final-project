@@ -1,0 +1,10 @@
+@import url(../../src/front/index.css);
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+.navbar {
+    background-color: var(--background-blue);
+}
