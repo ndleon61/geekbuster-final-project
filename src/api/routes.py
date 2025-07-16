@@ -52,7 +52,7 @@ def login():
     token = create_access_token(identity= str(user.id))
     return jsonify(access_token=token), 200
 
-
+#Gets favorites by ID
 @api.route('/favorites/<int:id>', methods=['GET'])
 @jwt_required()
 def get_favorite(id):
@@ -67,6 +67,7 @@ def get_favorite(id):
 
     return jsonify(favorite.serialize()), 200
 
+#Gets all favorites
 @api.route('/favorites', methods=['GET'])
 @jwt_required()
 def get_favorites():
@@ -74,7 +75,7 @@ def get_favorites():
     favorites = FavoriteMovie.query.filter_by(user_id=user_id).all()
     return jsonify([fav.serialize() for fav in favorites]), 200
 
-
+#Adds a favorite
 @api.route('/favorites', methods=['POST'])
 @jwt_required()
 def add_favorite():
@@ -94,6 +95,7 @@ def add_favorite():
 
     return jsonify(new_fav.serialize()), 201
 
+#Deletes a favorite
 @api.route('/favorites/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_favorite(id):
@@ -110,6 +112,7 @@ def delete_favorite(id):
     db.session.commit()
     return jsonify({"msg": "Favorite deleted"}), 200
 
+#Searches all movies by title
 @api.route('/movies/search', methods = ['GET'])
 def movie_search():
     title = request.args.get('title')
@@ -119,7 +122,7 @@ def movie_search():
     result = search_movies(title)
     return jsonify(result), 200
 
-
+#Gets movie details by ID
 @api.route('/movies/<string:imdb_id>', methods=['GET'])
 def movie_detail(imdb_id):
     result = get_movie_details(imdb_id)
