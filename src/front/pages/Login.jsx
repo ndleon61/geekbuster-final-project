@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGlobalReducer from '../hooks/useGlobalReducer';
+import { Link } from 'react-router-dom';
 import "../../styles/Login.css"
 
 const Login = () => {
@@ -35,6 +36,8 @@ const Login = () => {
         <input type="email" onChange={e => setEmail(e.target.value)} placeholder='Email' required/>
         <input type="password" onChange={e => setPassword(e.target.value)} placeholder='Password' required />
         <button type='submit' className='btn btn-primary'>Login</button>
+        <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
+        
     </form>
   )
 };
