@@ -37,7 +37,7 @@ const Signup = () => {
     }
 
   return (
-     <form  className='container' onSubmit={handleSubmit}>
+     <form  className='container signup-container' onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
         <input type="email"  placeholder='Email' required onChange={(e) => setEmail(e.target.value)}/>
         <input type="password"  placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />
