@@ -1,10 +1,16 @@
 @import url(../../src/front/index.css);
 
-img {
-    width: 100px;
-    height: 100px;
-}
-
 .navbar {
     background-color: var(--background-blue);
+    padding: 0px;
+
+}
+.navbar img {
+    height: 100px;
+    margin: 0px;
+    padding: 0px;
+}
+
+.navbar span {
+    color: var(--text-yellow);
 }
