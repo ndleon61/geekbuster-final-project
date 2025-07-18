@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useGlobalReducer from '../hooks/useGlobalReducer';
-import "../../styles/Signup.css"
+import "../styles/Signup.css"
 
 const Signup = () => {
 
@@ -37,15 +37,15 @@ const Signup = () => {
     }
 
   return (
-     <form  className='container signup-container' onSubmit={handleSubmit}>
+     <div className='signup-background'>
+        <form  className='container signup-container' onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
         <input type="email"  placeholder='Email' required onChange={(e) => setEmail(e.target.value)}/>
         <input type="password"  placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />
         <button type='submit' className='btn btn-success'>Register</button>
         <p>Already a member? <Link to="/">Login instead</Link></p>
-       
-        
     </form>
+     </div>
   )
 };
 
