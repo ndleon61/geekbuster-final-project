@@ -8,8 +8,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.models import db, User, FavoriteMovie
 from api.utils import generate_sitemap, APIException
+from api.services.tmdb import get_popular_movies, get_movie_details
 
-from api.services.omdb import search_movies, get_movie_details
 
 api = Blueprint('api', __name__)
 CORS(api)
@@ -112,22 +112,20 @@ def delete_favorite(id):
     db.session.commit()
     return jsonify({"msg": "Favorite deleted"}), 200
 
-#Searches all movies by title
-@api.route('/movies/search', methods = ['GET'])
-def movie_search():
-    title = request.args.get('title')
-    if not title:
-        return jsonify({"msg": "Missing 'title' query parem"}), 400
-    
-    result = search_movies(title)
-    return jsonify(result), 200
 
-#Gets movie details by ID
-@api.route('/movies/<string:imdb_id>', methods=['GET'])
-def movie_detail(imdb_id):
-    result = get_movie_details(imdb_id)
+@api.route('/movies/popular', methods=['GET'])
+def popular_movies():
+    page = request.args.get("page", 1)
+    try:
+        data = get_popular_movies(page)
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-    if "Error" in result:
-        return jsonify({"msg": result["Error"]}), 404
-
-    return jsonify(result), 200
+@api.route('/movies/<int:movie_id>', methods=['GET'])
+def movie_details(movie_id):
+    try:
+        data = get_movie_details(movie_id)
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

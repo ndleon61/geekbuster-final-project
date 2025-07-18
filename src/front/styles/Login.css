@@ -1,10 +1,6 @@
-@import url(../../src/front/index.css);
+@import url(../index.css);
 
-body{
-    background-image: url(https://eyntk.info/wp-content/uploads/2024/03/The-Blockbuster-Experience-movies.jpg);
-}
-
-.signup-container{
+.login-container {
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -15,8 +11,7 @@ body{
     color: var(--text-yellow);
     border: 2px solid white;
     border-radius: 5px;
-
 }
-.signup-container input{
+.login-container input{
     height: 40px;
 }
