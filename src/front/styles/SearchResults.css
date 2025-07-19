@@ -1,7 +1,6 @@
 .search-results-container {
 	padding: 2rem;
-    background: transparent;
-    backdrop-filter: blur(20px);
+    
 }
 
 .search-heading {
@@ -60,8 +59,8 @@
 .details-button {
 	display: inline-block;
 	text-align: center;
-	background-color: #003366; /* Blockbuster Blue */
-	color: #fff;
+	background-color: var(--background-blue);
+	color: var(--text-yellow);
 	padding: 0.5rem 1rem;
 	border-radius: 4px;
 	text-decoration: none;

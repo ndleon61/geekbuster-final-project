@@ -12,6 +12,7 @@ import Signup from "./pages/Signup";
 import PrivateRoute from "./components/ProtectedRoute";
 import Favorites from "./pages/Favorites";
 import SearchResults from "./components/SearchResults";
+import Genre from "./components/Genre";
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -19,6 +20,7 @@ export const router = createBrowserRouter(
         <Route path="/home" element={<PrivateRoute><Home /></PrivateRoute>} />
         <Route path="/favorites" element={<PrivateRoute><Favorites /></PrivateRoute>} />
         <Route path="/search" element={<PrivateRoute><SearchResults /></PrivateRoute>} />
+         <Route path="/genre" element={<PrivateRoute><Genre/></PrivateRoute>} />
 
         <Route index element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>

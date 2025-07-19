@@ -49,9 +49,21 @@ export const Navbar = () => {
 								<Link to="/home" className="nav-link">
 									Home
 								</Link>
+								<li className="nav-item dropdown">
+								<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									Genre
+								</a>
+									<ul className="dropdown-menu">
+										<Link to="/genre?query=Action" className="dropdown-item">Action</Link>
+										<Link to="/genre?query=Comedy" className="dropdown-item">Comedy</Link>
+										<Link to="/genre?query=Drama" className="dropdown-item">Drama</Link>
+										<Link to="/genre?query=Horror" className="dropdown-item">Horror</Link>
+									</ul>
+								</li>
 								<Link to="/favorites" className="nav-link">
 									Favorites
 								</Link>
+								
 								<form className="d-flex" role="search" onSubmit={handleSubmit}>
 									<input
 										className="form-control me-2"
@@ -65,7 +77,7 @@ export const Navbar = () => {
 									</button>
 								</form>
 								<button className="btn btn-danger ms-auto" onClick={handleLogout} id="logoutBtn">
-									Sign Out<i class="fa-solid fa-right-from-bracket"></i>
+									Sign Out<i className="fa-solid fa-right-from-bracket"></i>
 								</button>
 							</>
 						)}

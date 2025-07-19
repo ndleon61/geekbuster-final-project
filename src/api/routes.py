@@ -8,7 +8,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.models import db, User, FavoriteMovie
 from api.utils import generate_sitemap, APIException
-from api.services.tmdb import get_popular_movies, get_movie_details, search_movies_by_title
+from api.services.tmdb import get_popular_movies, get_movie_details, search_movies_by_title, search_movies_by_genre
+from api.services.tmdb import TMDB_GENRES
 
 
 api = Blueprint('api', __name__)
@@ -140,6 +141,25 @@ def search_movies():
 
     try:
         data = search_movies_by_title(title)
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+#Gets movie by genre    
+@api.route('/movies/genre', methods=['GET'])
+def get_movies_by_genre_name():
+    genre_name = request.args.get("query")
+
+    if not genre_name:
+        return jsonify({"error": "Query parameter 'query' is required"}), 400
+
+    genre_id = TMDB_GENRES.get(genre_name.title())
+    if not genre_id:
+        return jsonify({"error": f"Genre '{genre_name}' not recognized"}), 400
+
+    try:
+        data = search_movies_by_genre(genre_id)
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

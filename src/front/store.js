@@ -7,13 +7,14 @@ export const initialStore=()=>{
     token: token || null,
     user: user ? JSON.parse(user) : null,
     favorites: [],
-    movies: []
+    movies: [],
+    selectedGenre: null
 
   }
 }
 
 export default function storeReducer(store, action = {}) {
-  switch(action.type){
+  switch (action.type) {
     case 'LOGIN':
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("user", JSON.stringify(action.payload.user));
@@ -29,11 +30,11 @@ export default function storeReducer(store, action = {}) {
         user: null,
         token: null
       };
-
-      case 'set_movies':
-        return {...store, movies: action.payload};
-
+    case 'set_movies':
+      return { ...store, movies: action.payload };
+    case 'set_genre':
+      return { ...store, selectedGenre: action.payload };
     default:
-      throw new Error ("Unknown action type");
-  }    
+      throw new Error("Unknown action type");
+  }
 }

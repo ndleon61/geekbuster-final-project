@@ -29,6 +29,7 @@
 
 .nav-links a {
     color: var(--text-yellow);
+    
 }
 
 .nav-links a:hover{
@@ -41,9 +42,22 @@
 
 .nav-links #logoutBtn {
     float: right;
+    margin-right: 2rem;
 }
 
 .nav-links #logoutBtn i {
     margin-left: 1rem;
 }
+
+
+.navbar ul {
+    background-color: var(--background-blue);
+    border: 1px solid white;
+}
+
+.navbar ul a:hover{
+    color: white;
+    background-color: transparent;
+}
+
 
