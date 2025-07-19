@@ -10,7 +10,7 @@ export const Home = () => {
 
 	return (
 		<div className="home-container">
-			<h1 className="mb-4">Welcome to GeekBuster 🎬 </h1>
+			<h1 className=" neon-text mb-4">Welcome to GeekBusters 🎬 </h1>
 			
 		</div>
 	);

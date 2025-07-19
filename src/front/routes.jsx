@@ -22,7 +22,7 @@ export const router = createBrowserRouter(
 
         <Route index element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
-        
+        <Route path="*" element={<h1>404 - Page Not Found</h1>} />
       </Route>
     )
 );

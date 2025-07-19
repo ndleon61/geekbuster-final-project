@@ -5,6 +5,10 @@
     padding: 0px;
 }
 
+.navbar-brand{
+  width: 31%;
+}
+
 .navbar img {
     height: 100px;
     margin: 0px;
@@ -15,6 +19,14 @@
     color: var(--text-yellow);
 }
 
+.nav-links{
+    width: 100%;
+    gap: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .nav-links a {
     color: var(--text-yellow);
 }
@@ -22,3 +34,16 @@
 .nav-links a:hover{
     color: white;
 }
+
+.navbar-nav h2{
+    color: var(--text-yellow);
+}
+
+.nav-links #logoutBtn {
+    float: right;
+}
+
+.nav-links #logoutBtn i {
+    margin-left: 1rem;
+}
+
