@@ -2,3 +2,14 @@
     background-color: transparent;
     backdrop-filter: blur(20px);
 }
+
+.home-container h1 {
+    color: var(--background-blue);
+    text-shadow: 0 0 5px var(--text-yellow), 0 0 10px var(--text-yellow), 0 0 20px var(--text-yellow);
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 5rem;
+    font-family: var(--title-font)
+}

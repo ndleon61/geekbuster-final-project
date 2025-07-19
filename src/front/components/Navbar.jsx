@@ -1,9 +1,21 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/img/logo_lands.png"
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "../styles/Navbar.css"
 
 
 export const Navbar = () => {
+
+    const [search, setSearch] = useState("");
+    const navigate = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        if (search.trim()) {
+            navigate(`/search?query=${encodeURIComponent(search.trim())}`);
+        }
+    };
 
 	return (
 		<nav className="navbar navbar-expand-lg">
@@ -19,9 +31,17 @@ export const Navbar = () => {
 				<div className="navbar-nav nav-links">
 					<Link to="/home" className="nav-link">Home</Link>
 					<Link to="/favorites" className="nav-link">Favorites</Link>	
-					<form className="d-flex" role="search">
-					<input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-					<button className="btn btn-outline-warning" type="submit">Search</button>
+					<form className="d-flex" role="search" onSubmit={handleSubmit}>
+					<input 
+					className="form-control me-2" 
+					type="search" 
+					placeholder="Search" 
+					aria-label="Search"
+					onChange={(e) => setSearch(e.target.value)}
+					/>
+					<button 
+					className="btn btn-outline-warning" 
+					type="submit">Search</button>
 				</form>
 				</div>
 				<div className="navbar-nav ms-auto">

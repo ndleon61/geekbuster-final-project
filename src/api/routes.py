@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.models import db, User, FavoriteMovie
 from api.utils import generate_sitemap, APIException
-from api.services.tmdb import get_popular_movies, get_movie_details
+from api.services.tmdb import get_popular_movies, get_movie_details, search_movies_by_title
 
 
 api = Blueprint('api', __name__)
@@ -112,7 +112,7 @@ def delete_favorite(id):
     db.session.commit()
     return jsonify({"msg": "Favorite deleted"}), 200
 
-
+#Gets all popular movies. This will be used for the homepage 
 @api.route('/movies/popular', methods=['GET'])
 def popular_movies():
     page = request.args.get("page", 1)
@@ -122,10 +122,24 @@ def popular_movies():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#Gets movie by ID
 @api.route('/movies/<int:movie_id>', methods=['GET'])
 def movie_details(movie_id):
     try:
         data = get_movie_details(movie_id)
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+#Gets movie by title   
+@api.route('/movies/search/title', methods=['GET'])
+def search_movies():
+    title = request.args.get("query") 
+    if not title:
+        return jsonify({"error": "Query parameter 'query' is required"}), 400
+
+    try:
+        data = search_movies_by_title(title)
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
