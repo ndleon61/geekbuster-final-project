@@ -56,8 +56,15 @@
 }
 
 .navbar ul a:hover{
-    color: white;
+    color: var(--yellow);
     background-color: transparent;
 }
 
+.search-btn {
+    color: var(--text-yellow);
+    border-color: var(--text-yellow);
+}
+.search-btn:hover {
+    background-color: var(--text-yellow);
+}
 

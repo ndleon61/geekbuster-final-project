@@ -47,7 +47,7 @@ export const Navbar = () => {
 						{isLoggedIn && (
 							<>
 								<Link to="/home" className="nav-link">
-									Home
+									<i className="fa-solid fa-house"></i>
 								</Link>
 								<li className="nav-item dropdown">
 								<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -72,8 +72,8 @@ export const Navbar = () => {
 										aria-label="Search"
 										onChange={(e) => setSearch(e.target.value)}
 									/>
-									<button className="btn btn-outline-warning" type="submit">
-										Search
+									<button className="btn btn-outline-warning search-btn" type="submit">
+										<i className="fa-solid fa-magnifying-glass"></i>
 									</button>
 								</form>
 								<button className="btn btn-danger ms-auto" onClick={handleLogout} id="logoutBtn">
