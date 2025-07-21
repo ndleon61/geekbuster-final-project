@@ -7,7 +7,6 @@ export const initialStore=()=>{
     token: token || null,
     user: user ? JSON.parse(user) : null,
     favorites: []
-
   }
 }
 
