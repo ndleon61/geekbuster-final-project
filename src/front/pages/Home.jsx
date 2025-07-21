@@ -1,15 +1,14 @@
-import React, { useEffect } from "react"
-import rigoImageUrl from "../assets/img/rigo-baby.jpg";
-import useGlobalReducer from "../hooks/useGlobalReducer.jsx";
-import Login from "./Login.jsx";
+import React from "react";
+import useGlobalReducer from "../hooks/useGlobalReducer";
+import "../styles/Home.css";
+
 
 export const Home = () => {
-
-	const { store, dispatch } = useGlobalReducer()
+	const { store } = useGlobalReducer();
 
 	return (
-		<div>
-			<h1>If you see this page, you succesfully logged in</h1>
+		<div className="home-container">
+			<h1 className="mb-4">Welcome to GeekBuster 🎬</h1>
 		</div>
 	);
-}; 
+};

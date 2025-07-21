@@ -1,0 +1,17 @@
+@import url(../index.css);
+
+.login-container {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    width: 30rem;
+    margin-top: 4rem;
+    gap: 2rem;
+    background-color: var(--background-blue);
+    color: var(--text-yellow);
+    border: 2px solid white;
+    border-radius: 5px;
+}
+.login-container input{
+    height: 40px;
+}

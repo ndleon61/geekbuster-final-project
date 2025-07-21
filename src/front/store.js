@@ -6,7 +6,9 @@ export const initialStore=()=>{
   return{
     token: token || null,
     user: user ? JSON.parse(user) : null,
-    favorites: []
+    favorites: [],
+    movies: []
+
   }
 }
 
@@ -27,6 +29,10 @@ export default function storeReducer(store, action = {}) {
         user: null,
         token: null
       };
+
+      case 'set_movies':
+        return {...store, movies: action.payload};
+
     default:
       throw new Error ("Unknown action type");
   }    
