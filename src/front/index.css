@@ -1,13 +1,20 @@
 :root {
     --background-blue: #003366;
     --text-yellow: #FFD700;
+    --yellow-hover: #ae9402;
     --light-accent: #F5F5F5;
     --dark-accent: #1a1a1a;
+    --bg-image: url(https://eyntk.info/wp-content/uploads/2024/03/The-Blockbuster-Experience-movies.jpg);
+    --bg-size: cover;
+    --bg-position: center;
+    --bg-min-height: 100vh;
+    
+    
 }
 
 body{
-    background-image: url(https://eyntk.info/wp-content/uploads/2024/03/The-Blockbuster-Experience-movies.jpg);
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
+    font-family: 'Oswald', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
 }

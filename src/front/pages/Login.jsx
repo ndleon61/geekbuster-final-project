@@ -31,7 +31,8 @@ const Login = () => {
         }
     }
   return (
-    <form onSubmit={handleSubmit} className='container login-container'>
+    <div className='login-page'>
+        <form onSubmit={handleSubmit} className='login-form-container'>
         <h2>Login</h2>
         <input type="email" onChange={e => setEmail(e.target.value)} placeholder='Email' required/>
         <input type="password" onChange={e => setPassword(e.target.value)} placeholder='Password' required />
@@ -39,6 +40,7 @@ const Login = () => {
         <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
         
     </form>
+    </div>
   )
 };
 
