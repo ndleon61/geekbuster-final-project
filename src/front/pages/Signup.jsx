@@ -11,22 +11,23 @@ const Signup = () => {
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
+        //https://psychic-garbanzo-7vw7j9g45x69fwrw4-3001.app.github.dev/
         try {
-            const res = await fetch("https://sturdy-sniffle-6v9vqq46jxcp6q-3001.app.github.dev/api/signup", {
+            // const res = await fetch("https://sturdy-sniffle-6v9vqq46jxcp6q-3001.app.github.dev/api/signup", {
+            const res = await fetch("https://psychic-garbanzo-7vw7j9g45x69fwrw4-3001.app.github.dev/api/signup", {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({email, password})
+                body: JSON.stringify({ email, password })
             });
 
             if (res.ok) {
                 alert("Signup successfull");
                 navigate("/");
-            }else {
+            } else {
                 const errorData = await res.json();
                 alert(errorData.msg || "Signup failed");
             }
@@ -36,17 +37,17 @@ const Signup = () => {
         }
     }
 
-  return (
-     <div className='signup-background'>
-        <form  className='container signup-container' onSubmit={handleSubmit}>
-        <h2>Sign Up</h2>
-        <input type="email"  placeholder='Email' required onChange={(e) => setEmail(e.target.value)}/>
-        <input type="password"  placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />
-        <button type='submit' className='btn btn-success'>Register</button>
-        <p>Already a member? <Link to="/">Login instead</Link></p>
-    </form>
-     </div>
-  )
+    return (
+        <div className='signup-background'>
+            <form className='container signup-container' onSubmit={handleSubmit}>
+                <h2>Sign Up</h2>
+                <input type="email" placeholder='Email' required onChange={(e) => setEmail(e.target.value)} />
+                <input type="password" placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />
+                <button type='submit' className='btn btn-success'>Register</button>
+                <p>Already a member? <Link to="/">Login instead</Link></p>
+            </form>
+        </div>
+    )
 };
 
 export default Signup;

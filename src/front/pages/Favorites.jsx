@@ -31,8 +31,7 @@ const Favorites = () => {
     useEffect(() => {
         const loadFavorites = async () => {
             try {
-                //I will hook up the .env file to pass a variable so that a$$h()les don't see our back end stuff
-                const res = await fetch("https://sturdy-sniffle-6v9vqq46jxcp6q-3001.app.github.dev/movies/popular");
+                const res = await fetch("https://psychic-garbanzo-7vw7j9g45x69fwrw4-3001.app.github.dev");
                 const json = await res.json();
                 dispatch({ type: "set_favs", payload: json.results || [] });
             } catch (error) {
