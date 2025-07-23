@@ -8,7 +8,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.models import db, User, FavoriteMovie
 from api.utils import generate_sitemap, APIException
-from api.services.tmdb import get_popular_movies, get_movie_details
+from api.services.tmdb import get_popular_movies, get_movie_details, search_movies_by_title, search_movies_by_genre
+from api.services.tmdb import TMDB_GENRES
 
 
 api = Blueprint('api', __name__)
@@ -80,16 +81,16 @@ def get_favorites():
 @jwt_required()
 def add_favorite():
     data = request.get_json()
-    if not data or not data.get("imdb_id") or not data.get("title"):
-        return jsonify({"msg": "imdb_id and title are required"}), 400
+    if not data or not data.get("tmdb_id") or not data.get("title"):
+        return jsonify({"msg": "tmdb_id and title are required"}), 400
 
     user_id = get_jwt_identity()
-    
-    existing_fav = FavoriteMovie.query.filter_by(imdb_id=data["imdb_id"], user_id = user_id).first()
+
+    existing_fav = FavoriteMovie.query.filter_by(tmdb_id=data["tmdb_id"], user_id=user_id).first()
     if existing_fav:
         return jsonify({"msg": "Movie already favorited"}), 409
 
-    new_fav = FavoriteMovie(imdb_id=data["imdb_id"], title=data["title"], user_id=user_id)
+    new_fav = FavoriteMovie(tmdb_id=data["tmdb_id"], title=data["title"], user_id=user_id)
     db.session.add(new_fav)
     db.session.commit()
 
@@ -112,7 +113,7 @@ def delete_favorite(id):
     db.session.commit()
     return jsonify({"msg": "Favorite deleted"}), 200
 
-
+#Gets all popular movies. This will be used for the homepage 
 @api.route('/movies/popular', methods=['GET'])
 def popular_movies():
     page = request.args.get("page", 1)
@@ -122,10 +123,43 @@ def popular_movies():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+#Gets movie by ID
 @api.route('/movies/<int:movie_id>', methods=['GET'])
 def movie_details(movie_id):
     try:
         data = get_movie_details(movie_id)
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+#Gets movie by title   
+@api.route('/movies/search/title', methods=['GET'])
+def search_movies():
+    title = request.args.get("query") 
+    if not title:
+        return jsonify({"error": "Query parameter 'query' is required"}), 400
+
+    try:
+        data = search_movies_by_title(title)
+        return jsonify(data), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+
+#Gets movie by genre    
+@api.route('/movies/genre', methods=['GET'])
+def get_movies_by_genre_name():
+    genre_name = request.args.get("query")
+
+    if not genre_name:
+        return jsonify({"error": "Query parameter 'query' is required"}), 400
+
+    genre_id = TMDB_GENRES.get(genre_name.title())
+    if not genre_id:
+        return jsonify({"error": f"Genre '{genre_name}' not recognized"}), 400
+
+    try:
+        data = search_movies_by_genre(genre_id)
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500

@@ -21,7 +21,7 @@ class User(db.Model):
 
 class FavoriteMovie(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    imdb_id: Mapped[str] = mapped_column(String(20), nullable=False)
+    tmdb_id: Mapped[str] = mapped_column(String(20), nullable=False)
     title: Mapped[str] = mapped_column(String(255), nullable=False)
     user_id: Mapped[int] = mapped_column(ForeignKey("user.id"), nullable=False)
 
@@ -30,7 +30,7 @@ class FavoriteMovie(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "imdb_id": self.imdb_id,
+            "tmdb_id": self.tmdb_id,
             "title": self.title,
             "user_id": self.user_id
         }
