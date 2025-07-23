@@ -81,16 +81,16 @@ def get_favorites():
 @jwt_required()
 def add_favorite():
     data = request.get_json()
-    if not data or not data.get("imdb_id") or not data.get("title"):
-        return jsonify({"msg": "imdb_id and title are required"}), 400
+    if not data or not data.get("tmdb_id") or not data.get("title"):
+        return jsonify({"msg": "tmdb_id and title are required"}), 400
 
     user_id = get_jwt_identity()
-    
-    existing_fav = FavoriteMovie.query.filter_by(imdb_id=data["imdb_id"], user_id = user_id).first()
+
+    existing_fav = FavoriteMovie.query.filter_by(tmdb_id=data["tmdb_id"], user_id=user_id).first()
     if existing_fav:
         return jsonify({"msg": "Movie already favorited"}), 409
 
-    new_fav = FavoriteMovie(imdb_id=data["imdb_id"], title=data["title"], user_id=user_id)
+    new_fav = FavoriteMovie(tmdb_id=data["tmdb_id"], title=data["title"], user_id=user_id)
     db.session.add(new_fav)
     db.session.commit()
 

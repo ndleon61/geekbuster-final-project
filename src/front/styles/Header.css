@@ -1,0 +1,96 @@
+.header-container {
+    background: #FFD700;
+    backdrop-filter: blur(20px);
+    position: relative;
+    overflow: hidden;
+    height: 13rem;
+}
+
+.header-container h1 {    
+    color: var(--background-blue);
+    padding: 1rem;
+    margin: 2rem auto;
+    text-align: center;
+    font-size: 5rem;
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 10px white;
+    animation: fadeInText 0.5s ease-in-out 5s forwards; 
+}
+
+
+
+.icons-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+.moving-icon {
+    position: absolute;
+    font-size: 2rem;
+    color: var(--background-blue);
+    text-shadow: 0 0 10px white;
+    animation: float 10s linear infinite;
+}
+
+
+.moving-icon:nth-child(1) {
+    top: 10%;
+    left: -10%;
+    animation: float1 12s linear infinite;
+}
+.moving-icon:nth-child(2) {
+    top: 20%;
+    left: -15%;
+    animation: float2 14s linear infinite;
+}
+.moving-icon:nth-child(3) {
+    top: 30%;
+    left: -20%;
+    animation: float3 16s linear infinite;
+}
+.moving-icon:nth-child(4) {
+    top: 40%;
+    left: -25%;
+    animation: float4 18s linear infinite;
+}
+.moving-icon:nth-child(5) {
+    top: 50%;
+    left: -30%;
+    animation: float5 20s linear infinite;
+}
+.moving-icon:nth-child(6) {
+    top: 60%;
+    left: -35%;
+    animation: float6 22s linear infinite;
+}
+
+
+@keyframes float1 {
+  0%   { transform: translateX(0) rotate(0deg); }
+  100% { transform: translateX(120vw) rotate(360deg); }
+}
+@keyframes float2 {
+  0%   { transform: translateX(0) translateY(-20px) rotate(0deg); }
+  100% { transform: translateX(120vw) translateY(20px) rotate(360deg); }
+}
+@keyframes float3 {
+  0%   { transform: translateX(0) translateY(10px) rotate(0deg); }
+  100% { transform: translateX(120vw) translateY(-10px) rotate(-360deg); }
+}
+@keyframes float4 {
+  0%   { transform: translateX(0) rotate(0deg); }
+  100% { transform: translateX(120vw) rotate(-720deg); }
+}
+@keyframes float5 {
+  0%   { transform: translateX(0) scale(1); }
+  100% { transform: translateX(120vw) scale(1.5); }
+}
+@keyframes float6 {
+  0%   { transform: translateX(0) translateY(-30px); }
+  100% { transform: translateX(120vw) translateY(30px); }
+}
