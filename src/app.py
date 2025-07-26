@@ -14,6 +14,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
+import datetime
 
 # Load environment variables from .env file
 load_dotenv()
@@ -38,6 +39,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # JWT configuration
 app.config["JWT_SECRET_KEY"] = os.getenv("FLASK_APP_KEY", "default-secret-key")
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(minutes=30)
 
 # Initialize extensions
 db.init_app(app)

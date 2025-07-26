@@ -13,9 +13,7 @@ const Login = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        // const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/movies/genre?query=${genre}`);
-        // const res = await fetch("https://psychic-garbanzo-7vw7j9g45x69fwrw4-3001.app.github.dev/api/login", {
-        const res = await fetch((`${import.meta.env.VITE_BACKEND_URL}/api/login`), {
+        const res = await fetch (`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
