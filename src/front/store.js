@@ -7,6 +7,7 @@ export const initialStore=()=>{
     token: token || null,
     user: user ? JSON.parse(user) : null,
     favorites: [],
+    watchlist: [],
     movies: [],
     selectedGenre: null
 
@@ -34,6 +35,15 @@ export default function storeReducer(store, action = {}) {
       return { ...store, movies: action.payload };
     case 'set_genre':
       return { ...store, selectedGenre: action.payload };
+    
+    case 'set_favorites':
+      // const exists = store.favorites.some(fav => fav.id === action.payload.id);
+      // const updatedFavorites = exists ? store.favorites.filter(fav => fav.id !== action.payload.id) : [...store.favorites, action.payload];
+
+      // localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+
+      return {...store, favorites: action.payload}; 
+
     default:
       throw new Error("Unknown action type");
   }

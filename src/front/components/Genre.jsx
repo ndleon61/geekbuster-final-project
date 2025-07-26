@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
+import Favorites from "../pages/Favorites";
 import "../styles/Genre.css"
 
 const Genre = () => {
@@ -25,6 +26,18 @@ const Genre = () => {
 				setLoading(false);
 			}
 		};
+
+		const handleFavoriteToggle = (movie) => {
+			dispatch({
+				type: "toggle_favorite",
+				payload: {
+					id: movie.id,
+					title: movie.title,
+					poster_path: movie.poster_path,
+				},
+			});
+		};
+
 
 		if (genre) fetchMoviesByGenre();
 	}, [genre]);
@@ -54,6 +67,12 @@ const Genre = () => {
 								<Link to={`/movie/${movie.id}`} className="btn-view-details">
 									View Details
 								</Link>
+								<button
+									className="btn btn-sm btn-outline-warning"
+									onClick={() => handleFavoriteToggle(movie)}
+								>
+									<i className={`fa ${store.favorites.some(f => f.id === movie.id) ? "fa-solid fa-star" : "fa-regular fa-star"}`} />
+								</button>
 							</div>
 						</div>
 					))
