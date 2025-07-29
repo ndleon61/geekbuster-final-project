@@ -15,7 +15,7 @@ const Signup = () => {
         e.preventDefault();
 
         try {
-            const res = await fetch("https://sturdy-sniffle-6v9vqq46jxcp6q-3001.app.github.dev/api/signup", {
+            const res = await fetch(`${ import.meta.env.VITE_BACKEND_URL}/api/signup`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
