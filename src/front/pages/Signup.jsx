@@ -7,9 +7,11 @@ import "../styles/Signup.css"
 
 const Signup = () => {
 
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const navigate = useNavigate()
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [fullName, setFullName] = useState("");
+   
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,7 +21,7 @@ const Signup = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email, password })
+                body: JSON.stringify({ email, password, full_name: fullName })
             });
 
             if (res.ok) {
@@ -39,8 +41,10 @@ const Signup = () => {
      <div className='signup-page'>
         <form  className='signup-form-container' onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
+        <input type="name" placeholder='Full Name' onChange={(e) => setFullName(e.target.value)} />
         <input type="email"  placeholder='Email' required onChange={(e) => setEmail(e.target.value)}/>
         <input type="password"  placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />
+        
         <button type='submit' className='btn btn-success'>Register</button>
         <p>Already a member? <Link to="/">Login instead</Link></p>
     </form>

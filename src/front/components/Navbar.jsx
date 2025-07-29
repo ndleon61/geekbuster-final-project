@@ -8,6 +8,7 @@ export const Navbar = () => {
 	const [search, setSearch] = useState("");
 	const navigate = useNavigate();
 	const { store, dispatch } = useGlobalReducer();
+	
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -28,6 +29,7 @@ export const Navbar = () => {
 			<div className="container-fluid">
 				<a className="navbar-brand" href="/home">
 					<img src={logo} alt="Logo" />
+					
 				</a>
 
 				<button
@@ -76,11 +78,25 @@ export const Navbar = () => {
 										<i className="fa-solid fa-magnifying-glass"></i>
 									</button>
 								</form>
-								<button className="btn btn-danger ms-auto" onClick={handleLogout} id="logoutBtn">
-									Sign Out<i className="fa-solid fa-right-from-bracket"></i>
-								</button>
+								
 							</>
+							
 						)}
+
+						<li className="nav-item dropdown  profile-menu ms-auto">
+								<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									<span>{store.user?.full_name || "Guest"}</span>
+									<img src={store.image.image_1} id="user-image" />
+									
+								</a>
+									<ul className="dropdown-menu" id="profile-menue">
+										<Link>Edit Profile</Link>
+										<button onClick={handleLogout} >
+											Sign Out<i className="fa-solid fa-right-from-bracket"></i>
+										</button>
+
+									</ul>
+								</li>
 					</div>
 				</div>
 			</div>
