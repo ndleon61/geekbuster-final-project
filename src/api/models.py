@@ -4,14 +4,17 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 db = SQLAlchemy()
 
+
 class User(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
-    email: Mapped[str] = mapped_column(String(120), unique=True, nullable=False)
+    email: Mapped[str] = mapped_column(
+        String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
     full_name: Mapped[str] = mapped_column(nullable = False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
 
-    favorites: Mapped[list["FavoriteMovie"]] = relationship("FavoriteMovie", back_populates="user")
+    favorites: Mapped[list["FavoriteMovie"]] = relationship(
+        "FavoriteMovie", back_populates="user")
 
     def serialize(self):
         return {
@@ -20,6 +23,7 @@ class User(db.Model):
             "full_name": self.full_name
             # Do not include password for security
         }
+
 
 class FavoriteMovie(db.Model):
     id: Mapped[int] = mapped_column(primary_key=True)
@@ -34,5 +38,6 @@ class FavoriteMovie(db.Model):
             "id": self.id,
             "tmdb_id": self.tmdb_id,
             "title": self.title,
+            "poster_path": self.poster_path,
             "user_id": self.user_id
         }

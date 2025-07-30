@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import useGlobalReducer from "../hooks/useGlobalReducer";
-import Favorites from "../pages/Favorites";
 import "../styles/Genre.css"
 
 const Genre = () => {
@@ -11,6 +10,18 @@ const Genre = () => {
 
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+
+
+	const handleFavoriteToggle = (movie) => {
+		dispatch({
+			type: "toggle_favorite",
+			payload: {
+				id: movie.id,
+				title: movie.title,
+				poster_path: movie.poster_path,
+			},
+		});
+	};
 
 	useEffect(() => {
 		const fetchMoviesByGenre = async () => {
@@ -27,16 +38,6 @@ const Genre = () => {
 			}
 		};
 
-		const handleFavoriteToggle = (movie) => {
-			dispatch({
-				type: "toggle_favorite",
-				payload: {
-					id: movie.id,
-					title: movie.title,
-					poster_path: movie.poster_path,
-				},
-			});
-		};
 
 
 		if (genre) fetchMoviesByGenre();
@@ -52,30 +53,36 @@ const Genre = () => {
 				{store.movies.length === 0 ? (
 					<p>No movies found.</p>
 				) : (
-					store.movies.map((movie) => (
-						<div className="movie-card" key={movie.id}>
-							<img
-								src={
-									movie.poster_path
-										? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-										: "https://via.placeholder.com/300x450?text=No+Image"
-								}
-								alt={movie.title}
-							/>
-							<div className="movie-info">
-								<h5>{movie.title}</h5>
-								<Link to={`/movie/${movie.id}`} className="btn-view-details">
-									View Details
-								</Link>
-								<button
-									className="btn btn-sm btn-outline-warning"
-									onClick={() => handleFavoriteToggle(movie)}
-								>
-									<i className={`fa ${store.favorites.some(f => f.id === movie.id) ? "fa-solid fa-star" : "fa-regular fa-star"}`} />
-								</button>
+					store.movies.map((movie) => {
+						const isFavorite = store.favorites.some(
+							(fav) => String(fav.id) === String(movie.id)
+						);
+
+						return (
+							<div className="movie-card" key={movie.id}>
+								<img
+									src={
+										movie.poster_path
+											? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+											: "https://via.placeholder.com/300x450?text=No+Image"
+									}
+									alt={movie.title}
+								/>
+								<div className="movie-info">
+									<h5>{movie.title}</h5>
+									<Link to={`/movie/${movie.id}`} className="btn-view-details">
+										View Details
+									</Link>
+									<button
+										className="btn btn-sm btn-outline-warning"
+										onClick={() => handleFavoriteToggle(movie)}
+									>
+										<i className={`fa ${isFavorite ? "fa-solid fa-star" : "fa-regular fa-star"}`} />
+									</button>
+								</div>
 							</div>
-						</div>
-					))
+						);
+					})
 				)}
 			</div>
 		</div>
