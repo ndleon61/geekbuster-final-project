@@ -15,7 +15,7 @@ const Signup = () => {
         e.preventDefault();
 
         try {
-            const res = await fetch("https://sturdy-sniffle-6v9vqq46jxcp6q-3001.app.github.dev/api/signup", {
+            const res = await fetch(`${ import.meta.env.VITE_BACKEND_URL}/api/signup`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
@@ -37,8 +37,8 @@ const Signup = () => {
     }
 
   return (
-     <div className='signup-background'>
-        <form  className='container signup-container' onSubmit={handleSubmit}>
+     <div className='signup-page'>
+        <form  className='signup-form-container' onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
         <input type="email"  placeholder='Email' required onChange={(e) => setEmail(e.target.value)}/>
         <input type="password"  placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />

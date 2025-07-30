@@ -13,7 +13,7 @@ const Login = () => {
 
     async function handleSubmit(e) {
         e.preventDefault();
-        const res = await fetch ("https://sturdy-sniffle-6v9vqq46jxcp6q-3001.app.github.dev/api/login", {
+        const res = await fetch (`${ import.meta.env.VITE_BACKEND_URL}/api/login`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({email, password})
@@ -31,7 +31,8 @@ const Login = () => {
         }
     }
   return (
-    <form onSubmit={handleSubmit} className='container login-container'>
+    <div className='login-page'>
+        <form onSubmit={handleSubmit} className='login-form-container'>
         <h2>Login</h2>
         <input type="email" onChange={e => setEmail(e.target.value)} placeholder='Email' required/>
         <input type="password" onChange={e => setPassword(e.target.value)} placeholder='Password' required />
@@ -39,6 +40,7 @@ const Login = () => {
         <p>Don't have an account? <Link to="/signup">Sign up</Link></p>
         
     </form>
+    </div>
   )
 };
 

@@ -1,4 +1,15 @@
 .home-container{
-    background-color: transparent;
+    background-color: var(--text-yellow);
     backdrop-filter: blur(20px);
 }
+
+.home-container h1 {
+    color: white;
+    padding: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 5rem;
+     
+}
+
