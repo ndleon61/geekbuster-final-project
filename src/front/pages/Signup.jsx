@@ -16,7 +16,7 @@ const Signup = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
+            const res = await fetch(`${ import.meta.env.VITE_BACKEND_URL}/api/signup`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
