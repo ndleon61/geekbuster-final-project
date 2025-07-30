@@ -8,12 +8,12 @@ export const Navbar = () => {
 	const [search, setSearch] = useState("");
 	const navigate = useNavigate();
 	const { store, dispatch } = useGlobalReducer();
-	
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		if (search.trim()) {
 			navigate(`/search?query=${encodeURIComponent(search.trim())}`);
+			setSearch(""); // optional: reset after search
 		}
 	};
 
@@ -27,10 +27,9 @@ export const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand-lg">
 			<div className="container-fluid">
-				<a className="navbar-brand" href="/home">
+				<Link className="navbar-brand" to="/home">
 					<img src={logo} alt="Logo" />
-					
-				</a>
+				</Link>
 
 				<button
 					className="navbar-toggler"
@@ -51,52 +50,67 @@ export const Navbar = () => {
 								<Link to="/home" className="nav-link">
 									<i className="fa-solid fa-house"></i>
 								</Link>
+
 								<li className="nav-item dropdown">
-								<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									Genre
-								</a>
+									<button
+										className="nav-link dropdown-toggle btn btn-link"
+										type="button"
+										data-bs-toggle="dropdown"
+										aria-expanded="false"
+									>
+										Genre
+									</button>
 									<ul className="dropdown-menu">
-										<Link to="/genre?query=Action" className="dropdown-item">Action</Link>
-										<Link to="/genre?query=Comedy" className="dropdown-item">Comedy</Link>
-										<Link to="/genre?query=Drama" className="dropdown-item">Drama</Link>
-										<Link to="/genre?query=Horror" className="dropdown-item">Horror</Link>
+										<li><Link to="/genre?query=Action" className="dropdown-item">Action</Link></li>
+										<li><Link to="/genre?query=Comedy" className="dropdown-item">Comedy</Link></li>
+										<li><Link to="/genre?query=Drama" className="dropdown-item">Drama</Link></li>
+										<li><Link to="/genre?query=Horror" className="dropdown-item">Horror</Link></li>
 									</ul>
 								</li>
+
 								<Link to="/favorites" className="nav-link">
 									Favorites
 								</Link>
-								
+
 								<form className="d-flex" role="search" onSubmit={handleSubmit}>
 									<input
 										className="form-control me-2"
 										type="search"
 										placeholder="Search"
 										aria-label="Search"
+										value={search}
 										onChange={(e) => setSearch(e.target.value)}
 									/>
 									<button className="btn btn-outline-warning search-btn" type="submit">
 										<i className="fa-solid fa-magnifying-glass"></i>
 									</button>
 								</form>
-								
 							</>
-							
 						)}
 
-						<li className="nav-item dropdown  profile-menu ms-auto">
-								<a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-									<span>{store.user?.full_name || "Guest"}</span>
-									<img src={store.image.image_1} id="user-image" />
-									
-								</a>
-									<ul className="dropdown-menu" id="profile-menue">
-										<Link>Edit Profile</Link>
-										<button onClick={handleLogout} >
-											Sign Out<i className="fa-solid fa-right-from-bracket"></i>
-										</button>
-
-									</ul>
+						<li className="nav-item dropdown profile-menu ms-auto">
+							<button
+								className="nav-link dropdown-toggle btn btn-link"
+								type="button"
+								data-bs-toggle="dropdown"
+								aria-expanded="false"
+							>
+								<span>{store.user?.full_name || "Guest"}</span>
+								<img
+									src={store.image?.image_1 || "/default-profile.png"}
+									alt="User profile"
+									id="user-image"
+								/>
+							</button>
+							<ul className="dropdown-menu" id="profile-menu">
+								<li><Link to="/edit-profile" className="dropdown-item">Edit Profile</Link></li>
+								<li>
+									<button onClick={handleLogout} className="dropdown-item">
+										Sign Out <i className="fa-solid fa-right-from-bracket ms-2"></i>
+									</button>
 								</li>
+							</ul>
+						</li>
 					</div>
 				</div>
 			</div>
