@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 import os
-from flask import Flask, request, jsonify, url_for, send_from_directory
+from flask import Blueprint, Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from flask_jwt_extended import JWTManager
@@ -14,6 +14,7 @@ from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_cors import CORS
+import datetime
 
 # Load environment variables from .env file
 load_dotenv()
@@ -38,6 +39,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # JWT configuration
 app.config["JWT_SECRET_KEY"] = os.getenv("FLASK_APP_KEY", "default-secret-key")
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(minutes=30)
 
 # Initialize extensions
 db.init_app(app)
@@ -71,6 +73,7 @@ def serve_any_other_file(path):
     response = send_from_directory(static_file_dir, path)
     response.cache_control.max_age = 0  # avoid cache memory
     return response
+
 
 # Start the server
 if __name__ == '__main__':

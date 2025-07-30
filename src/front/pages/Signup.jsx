@@ -11,22 +11,22 @@ const Signup = () => {
     const [password, setPassword] = useState("")
     const navigate = useNavigate()
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-
+        //https://psychic-garbanzo-7vw7j9g45x69fwrw4-3001.app.github.dev/
         try {
             const res = await fetch(`${ import.meta.env.VITE_BACKEND_URL}/api/signup`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({email, password})
+                body: JSON.stringify({ email, password })
             });
 
             if (res.ok) {
                 alert("Signup successfull");
                 navigate("/");
-            }else {
+            } else {
                 const errorData = await res.json();
                 alert(errorData.msg || "Signup failed");
             }
