@@ -1,11 +1,12 @@
 export const initialStore = () => {
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
+  const favorites = localStorage.getItem("favorites");
 
   return {
     token: token || null,
     user: user ? JSON.parse(user) : null,
-    favorites: [],
+    favorites: favorites ? JSON.parse(favorites) : [],
     watchlist: [],
     movies: [],
     selectedGenre: null,
@@ -16,9 +17,8 @@ export const initialStore = () => {
       image_4: "https://i.pinimg.com/564x/a4/c6/5f/a4c65f709d4c0cb1b4329c12beb9cd78.jpg",
       image_5: "https://i.pinimg.com/564x/b2/a0/29/b2a029a6c2757e9d3a09265e3d07d49d.jpg"
     }
-
-  }
-}
+  };
+};
 
 export default function storeReducer(store, action = {}) {
   switch (action.type) {
@@ -30,12 +30,17 @@ export default function storeReducer(store, action = {}) {
         user: action.payload.user,
         token: action.payload.token,
       };
+
     case "LOGOUT":
       localStorage.clear();
       return {
         ...store,
         user: null,
         token: null,
+        favorites: [],
+        watchlist: [],
+        movies: [],
+        selectedGenre: null,
       };
 
     case "set_movies":
@@ -44,13 +49,20 @@ export default function storeReducer(store, action = {}) {
     case "set_genre":
       return { ...store, selectedGenre: action.payload };
 
+    case "set_favorites":
+      localStorage.setItem("favorites", JSON.stringify(action.payload));
+      return {
+        ...store,
+        favorites: action.payload,
+      };
+
     case "toggle_favorite": {
-      const { id } = action.payload;
+      const { id, title, poster_path } = action.payload;
       const exists = store.favorites.some((fav) => fav.id === id);
 
       const updatedFavorites = exists
-        ? store.favorites.filter((fav) => !(fav.id === id))
-        : [...store.favorites, { id }];
+        ? store.favorites.filter((fav) => fav.id !== id)
+        : [...store.favorites, { id, title, poster_path }];
 
       localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
 
@@ -61,6 +73,7 @@ export default function storeReducer(store, action = {}) {
     }
 
     default:
+      console.error("Unknown action type:", action.type);
       throw new Error("Unknown action type");
   }
 }
