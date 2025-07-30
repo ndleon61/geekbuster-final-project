@@ -15,7 +15,7 @@ const Signup = () => {
         e.preventDefault();
         //https://psychic-garbanzo-7vw7j9g45x69fwrw4-3001.app.github.dev/
         try {
-            const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/signup`, {
+            const res = await fetch(`${ import.meta.env.VITE_BACKEND_URL}/api/signup`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json"
