@@ -10,8 +10,8 @@ class User(db.Model):
     email: Mapped[str] = mapped_column(
         String(120), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(nullable=False)
-    is_active: Mapped[bool] = mapped_column(
-        Boolean(), nullable=False, default=True)
+    full_name: Mapped[str] = mapped_column(nullable = False)
+    is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
 
     favorites: Mapped[list["FavoriteMovie"]] = relationship(
         "FavoriteMovie", back_populates="user")
@@ -20,6 +20,7 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
+            "full_name": self.full_name
             # Do not include password for security
         }
 

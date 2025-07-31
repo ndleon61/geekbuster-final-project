@@ -21,18 +21,25 @@ def handle_hello():
     return jsonify({"message": "Hello from the backend!"}), 200
 
 # Signup route
+from flask_cors import cross_origin
+
 @api.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
 
-    if not data or not data.get("email") or not data.get("password"):
-        return jsonify({"msg": "Email and password are required"}), 400
+    if not data or not data.get("email") or not data.get("password") or not data.get("full_name"):
+        return jsonify({"msg": "Email, password, and full name are required"}), 400
 
     if User.query.filter_by(email=data["email"]).first():
         return jsonify({"msg": "User already exists"}), 400
 
     hashed_pw = generate_password_hash(data["password"])
-    new_user = User(email=data["email"], password=hashed_pw, is_active=True)
+    new_user = User(
+        email=data["email"],
+        password=hashed_pw,
+        full_name=data["full_name"],
+        is_active=True
+    )
     db.session.add(new_user)
     db.session.commit()
 
@@ -51,7 +58,7 @@ def login():
         return jsonify({"msg": "Invalid credentials"}), 401
 
     token = create_access_token(identity= str(user.id))
-    return jsonify(access_token=token), 200
+    return jsonify(access_token=token, user = user.serialize()), 200
 
 #Gets favorites by ID
 @api.route('/favorites/<int:id>', methods=['GET'])
