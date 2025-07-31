@@ -3,6 +3,7 @@ import useGlobalReducer from "../hooks/useGlobalReducer";
 import "../styles/Home.css";
 import Banner from "../components/Banner";
 import Mov from "../components/Mov"; 
+import Header from "../components/Header";
 
 
 export const Home = () => {
@@ -10,11 +11,10 @@ export const Home = () => {
 
   return (
     <div className="home-container">
+		<Header />
       <Banner />
       <Mov />
-      <h1 className="neon-text mb-4" data-text="Welcome to GeekBusters">
-        Welcome to GeekBusters
-      </h1>
+      
     </div>
   );
 };
