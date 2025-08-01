@@ -1,0 +1,27 @@
+.movie-details.container {
+  padding: 20px;
+  color: #fff;
+  background-color: #002855; /* example bg */
+}
+
+.details-content {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.movie-poster {
+  width: 300px; /* fixed width for the poster */
+  border-radius: 10px;
+  flex-shrink: 0; /* prevent shrinking */
+}
+
+.movie-info {
+  max-width: 600px;
+}
+
+.description {
+  margin-top: 20px;
+  line-height: 1.5;
+  font-size: 16px;
+}

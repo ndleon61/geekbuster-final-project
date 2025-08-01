@@ -19,21 +19,25 @@ const MovieRow = ({ title, fetchUrl }) => {
 
   return (
     <div className="row">
-      <h2>{title}</h2>
-      <div className="row-posters">
-        {movies
-          .filter((movie) => movie.poster_path)
-          .map((movie) => (
-            <Link key={movie.id} to={`/movie/${movie.id}`}>
-              <img
-                className="row-poster"
-                src={`${IMG_BASE}${movie.poster_path}`}
-                alt={movie.title || movie.name}
-              />
-            </Link>
-          ))}
-      </div>
-    </div>
+  <h2>{title}</h2>
+  <div className="row-posters">
+    {movies
+      .filter((movie) => movie.poster_path)
+      .map((movie) => (
+        <div key={movie.id} className="movie-card">
+          <img
+            className="row-poster"
+            src={`${IMG_BASE}${movie.poster_path}`}
+            alt={movie.title || movie.name}
+          />
+          <h3 className="movie-title">{movie.title || movie.name}</h3>
+          <Link to={`/movie/${movie.id}`} className="details-button">
+            View Details
+          </Link>
+        </div>
+      ))}
+  </div>
+</div>
   );
 };
 

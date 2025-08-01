@@ -1,4 +1,4 @@
-// Mov.jsx (or Movies.jsx)
+import "../styles/Mov.css"; 
 import React from "react";
 import MovieRow from "./MovieRow";
 
@@ -12,8 +12,8 @@ const popularMoviesUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${a
 export default function Mov() {
   return (
     <div>
-      <h1>Popular Movies</h1>
-      <MovieRow title="Popular Movies" fetchUrl={popularMoviesUrl} />
+      
+      <MovieRow title="Movies" fetchUrl={popularMoviesUrl} />
     </div>
   );
 }
