@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "../styles/Banner.css";
+import "../styles/Details.css";
 
 const API_KEY = import.meta.env.VITE_TMDB_KEY;
 const IMAGE_BASE_URL = "https://image.tmdb.org/t/p/w500";
@@ -32,15 +32,19 @@ const MovieDetails = () => {
 	return (
 		<div className="movie-details container">
 			<h1>{movie.title}</h1>
-			<img
-				src={`${IMAGE_BASE_URL}${movie.poster_path}`}
-				alt={movie.title}
-				className="movie-poster"
-			/>
-			<p><strong>Genre:</strong> {movie.genres.map(g => g.name).join(", ")}</p>
-			<p><strong>Release Date:</strong> {movie.release_date}</p>
-			<p><strong>Rating:</strong> {movie.vote_average} / 10</p>
-			<p className="description">{movie.overview}</p>
+			<div className="details-content">
+				<img
+					src={`${IMAGE_BASE_URL}${movie.poster_path}`}
+					alt={movie.title}
+					className="movie-poster"
+				/>
+				<div className="movie-info">
+					<p><strong>Genre:</strong> {movie.genres.map(g => g.name).join(", ")}</p>
+					<p><strong>Release Date:</strong> {movie.release_date}</p>
+					<p><strong>Rating:</strong> {movie.vote_average} / 10</p>
+					<p className="description">{movie.overview}</p>
+				</div>
+			</div>
 		</div>
 	);
 };
