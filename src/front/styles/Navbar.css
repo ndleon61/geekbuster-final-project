@@ -1,70 +1,94 @@
 @import url(../index.css);
 
 .navbar {
-    background-color: var(--background-blue);
-    padding: 0px;
+  background-color: var(--background-blue);
+  padding: 0;
+  width: 100%;
 }
 
-.navbar-brand{
-  width: 31%;
+.navbar-brand {
+  width: 30%;
 }
 
 .navbar img {
-    height: 100px;
-    margin: 0px;
-    padding: 0px;
+  max-height: 80px;
+  height: auto;
+  margin: 0;
+  padding: 0;
 }
 
 .navbar span {
-    color: var(--text-yellow);
+  color: var(--text-yellow);
 }
 
-.nav-links{
-    width: 100%;
-    gap: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.nav-links {
+  width: 100%;
+  gap: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .nav-links a {
-    color: var(--text-yellow);
-    
+  color: var(--text-yellow);
+  transition: all 0.3s ease;
 }
 
-.nav-links a:hover{
-    color: white;
+.nav-links a:hover {
+  color: white;
 }
 
-.navbar-nav h2{
-    color: var(--text-yellow);
+.navbar-nav h2 {
+  color: var(--text-yellow);
 }
-
-.nav-links #logoutBtn {
-    float: right;
-    margin-right: 2rem;
-}
-
-.nav-links #logoutBtn i {
-    margin-left: 1rem;
-}
-
 
 .navbar ul {
-    background-color: var(--background-blue);
-    border: 1px solid white;
+  background-color: var(--background-blue);
+  border: 1px solid white;
 }
 
-.navbar ul a:hover{
-    color: var(--yellow);
-    background-color: transparent;
+.navbar ul a:hover {
+  color: var(--text-yellow);
+  background-color: transparent;
 }
 
 .search-btn {
-    color: var(--text-yellow);
-    border-color: var(--text-yellow);
-}
-.search-btn:hover {
-    background-color: var(--text-yellow);
+  color: var(--text-yellow);
+  border-color: var(--text-yellow);
+  transition: all 0.3s ease;
 }
 
+.search-btn:hover {
+  background-color: var(--text-yellow);
+  color: black;
+}
+
+#user-image {
+  height: 2rem;
+  border-radius: 5px;
+  margin-left: 1rem;
+}
+
+
+.navbar .nav-link,
+.navbar .dropdown-toggle,
+.search-btn,
+.dropdown-item {
+  cursor: pointer;
+}
+
+
+@media (max-width: 768px) {
+  .navbar-brand {
+    width: auto;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .navbar img {
+    max-height: 60px;
+  }
+}

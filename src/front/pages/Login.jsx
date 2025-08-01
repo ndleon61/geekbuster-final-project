@@ -23,7 +23,7 @@ const Login = () => {
         if (data.access_token) {
             dispatch({
                 type: "LOGIN",
-                payload: { token: data.access_token, user: { email } }
+                payload: { token: data.access_token, user: data.user }
             });
             navigate("/home")
         } else {

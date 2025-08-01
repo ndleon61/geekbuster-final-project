@@ -10,10 +10,9 @@ export const Home = () => {
 
   return (
     <div className="home-container">
-      <Header />
+		<Header />
       <Banner />
       <Mov />
-      <Header />
       
     </div>
   );
