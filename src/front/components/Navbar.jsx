@@ -13,7 +13,7 @@ export const Navbar = () => {
 		e.preventDefault();
 		if (search.trim()) {
 			navigate(`/search?query=${encodeURIComponent(search.trim())}`);
-			setSearch(""); // optional: reset after search
+			setSearch(""); 
 		}
 	};
 
@@ -98,8 +98,7 @@ export const Navbar = () => {
 							>
 								<span>{store.user?.full_name || "Guest"}</span>
 								<img
-									src={store.image?.image_1 || "/default-profile.png"}
-									alt="User profile"
+									src={store.image?.selected || store.image?.image_1} alt="Profile"
 									id="user-image"
 								/>
 							</button>
