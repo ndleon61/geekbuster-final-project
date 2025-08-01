@@ -57,6 +57,7 @@ export const Navbar = () => {
 										type="button"
 										data-bs-toggle="dropdown"
 										aria-expanded="false"
+										id="genre"
 									>
 										Genre
 									</button>
@@ -88,7 +89,7 @@ export const Navbar = () => {
 							</>
 						)}
 
-						<li className="nav-item dropdown profile-menu ms-auto">
+						<li className="nav-item dropdown profile-menu">
 							<button
 								className="nav-link dropdown-toggle btn btn-link"
 								type="button"
@@ -103,9 +104,9 @@ export const Navbar = () => {
 								/>
 							</button>
 							<ul className="dropdown-menu" id="profile-menu">
-								<li><Link to="/edit-profile" className="dropdown-item">Edit Profile</Link></li>
+								<li><Link to="/profile" className="dropdown-item">Edit Profile</Link></li>
 								<li>
-									<button onClick={handleLogout} className="dropdown-item">
+									<button onClick={handleLogout} className="dropdown-item" id = "sign-out-button">
 										Sign Out <i className="fa-solid fa-right-from-bracket ms-2"></i>
 									</button>
 								</li>

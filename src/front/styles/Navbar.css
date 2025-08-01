@@ -77,6 +77,32 @@
   cursor: pointer;
 }
 
+#sign-out-button {
+
+  color: red;
+  border-radius: 10px;
+
+}
+
+#profile-menu {
+  padding: 10px;
+}
+
+#sign-out-button:hover {
+  background-color: red;
+  color: white;
+
+}
+
+#genre {
+  color: var(--text-yellow);
+}
+
+
+
+
+
+
 
 @media (max-width: 768px) {
   .navbar-brand {

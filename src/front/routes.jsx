@@ -11,7 +11,8 @@ import PrivateRoute from "./components/ProtectedRoute";
 import Favorites from "./pages/Favorites";
 import SearchResults from "./components/SearchResults";
 import Genre from "./components/Genre";
-import MovieDetails from "./components/Details"; 
+import MovieDetails from "./components/Details";
+import EditProfile from "./pages/EditProfile";
 
 export const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ export const router = createBrowserRouter(
       <Route path="/search" element={<PrivateRoute><SearchResults /></PrivateRoute>} />
       <Route path="/genre" element={<PrivateRoute><Genre /></PrivateRoute>} />
       <Route path="/movie/:id" element={<PrivateRoute><MovieDetails /></PrivateRoute>} />
+       <Route path="/profile" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
       <Route index element={<Login />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="*" element={<h1>404 - Page Not Found</h1>} />
