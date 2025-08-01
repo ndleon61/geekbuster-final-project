@@ -7,44 +7,47 @@ const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_BASE = "https://image.tmdb.org/t/p/original";
 
 const Banner = () => {
-	const [bannerMovie, setBannerMovie] = useState(null);
+  const [movies, setMovies] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
 
-	useEffect(() => {
-		const fetchBannerMovie = async () => {
-			try {
-				const response = await axios.get(
-					`${BASE_URL}/trending/movie/week?api_key=${API_KEY}`
-				);
-				const movies = response.data.results;
-				const randomMovie = movies[Math.floor(Math.random() * movies.length)];
-				setBannerMovie(randomMovie);
-			} catch (error) {
-				console.error("Failed to fetch banner movie:", error);
-			}
-		};
+  useEffect(() => {
+    const fetchBannerMovies = async () => {
+      try {
+        const response = await axios.get(
+          `${BASE_URL}/trending/movie/week?api_key=${API_KEY}`
+        );
+        setMovies(response.data.results || []);
+      } catch (error) {
+        console.error("Failed to fetch banner movies:", error);
+      }
+    };
 
-		fetchBannerMovie();
-	}, []);
+    fetchBannerMovies();
+  }, []);
 
-	if (!bannerMovie) return <div>Loading...</div>;
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % movies.length);
+  };
 
-	return (
-		<header
-			className="banner"
-			style={{
-				backgroundImage: `url(${IMG_BASE}${bannerMovie.backdrop_path})`,
-				backgroundSize: "cover",
-				backgroundPosition: "center",
-			}}
-		>
-			<div className="banner-content">
-				<h1>{bannerMovie.title}</h1>
-				<p>{bannerMovie.overview}</p>
-			</div>
-		</header>
-	);
+  if (!movies.length) return <div>Loading...</div>;
+
+  const bannerMovie = movies[currentIndex];
+
+  return (
+    <header
+      className="banner"
+      style={{
+        backgroundImage: `url(${IMG_BASE}${bannerMovie.backdrop_path})`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        position: "relative",
+      }}
+    >
+      <button className="banner-next-button" onClick={handleNext}>
+        Next ➤
+      </button>
+    </header>
+  );
 };
 
 export default Banner;
-
-

@@ -1,5 +1,4 @@
 export const initialStore=()=>{
-
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
 

@@ -1,5 +1,30 @@
 .banner {
-  height: 1000px;
+  height: 700px;
   background-size: cover;
   background-position: center;
+}
+.banner {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  transition: background-image 0.5s ease-in-out;
+}
+
+/* Navigation button */
+.banner-next-button {
+  position: absolute;
+  bottom: 30px;
+  right: 40px;
+  padding: 10px 16px;
+  font-size: 16px;
+  background-color: rgba(0, 40, 85, 0.8);
+  color: #ffd700;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.banner-next-button:hover {
+  background-color: rgba(0, 60, 120, 0.9);
 }
