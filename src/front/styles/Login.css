@@ -1,29 +1,59 @@
 @import url(../index.css);
 
-.login-form-container {
-    margin-top: 4rem;
-    padding: 2rem;
-    display: flex;
-    flex-direction: column;
-    width: 30rem;
-    gap: 2rem;
-    background-color: var(--background-blue);
-    color: var(--text-yellow);
-    border: 2px solid white;
-    border-radius: 15px;
-    height: 25rem;
-}
-.login-form-container input{
-    height: 40px;
-}
-.login-page{
+.login-page {
     margin: 0;
     padding: 0;
     height: 100vh;
     display: flex;
     justify-content: center;
+    align-items: center;
     background: var(--bg-image);
     background-size: cover;
     background-position: center;
+}
 
+.login-content-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.auth-form {
+    background-color: var(--background-blue);
+    color: var(--text-yellow);
+    padding: 2rem;
+    width: 30rem;
+    max-width: 30rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    border: 2px solid white;
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+
+.auth-form input {
+    height: 40px;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+}
+
+
+.auth-form input:focus {
+    outline: 2px solid var(--text-yellow);
+    background-color: #002244;
+    color: var(--text-yellow);
+}
+
+
+.btn-link {
+    background: none;
+    border: none;
+    color: var(--text-yellow);
+    text-decoration: underline;
+    cursor: pointer;
 }

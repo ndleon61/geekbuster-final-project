@@ -12,6 +12,8 @@ class User(db.Model):
     password: Mapped[str] = mapped_column(nullable=False)
     full_name: Mapped[str] = mapped_column(nullable = False)
     is_active: Mapped[bool] = mapped_column(Boolean(), nullable=False, default=True)
+    security_question: Mapped[str] = mapped_column(String(255), nullable=False)
+    security_answer: Mapped[str] = mapped_column(nullable=False)
 
     favorites: Mapped[list["FavoriteMovie"]] = relationship(
         "FavoriteMovie", back_populates="user")
