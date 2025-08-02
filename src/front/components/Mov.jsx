@@ -2,19 +2,13 @@ import "../styles/Mov.css";
 import React from "react";
 import MovieRow from "./MovieRow";
 
-
-const apiKey = import.meta.env.VITE_TMDB_KEY;
-console.log("TMDB KEY:", apiKey); 
-
-const popularMoviesUrl = `https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}&language=en-US&page=1`;
-
-
 export default function Mov() {
   return (
-    <div>
-      
-      <MovieRow title="Movies" fetchUrl={popularMoviesUrl} />
+    <div className="mov-page">
+      <MovieRow title="Popular Movies" endpoint="/movie/popular" />
+      <MovieRow title="Top Rated" endpoint="/movie/top_rated" />
+      <MovieRow title="Now Playing" endpoint="/movie/now_playing" />
+      <MovieRow title="Upcoming" endpoint="/movie/upcoming" />
     </div>
   );
 }
-

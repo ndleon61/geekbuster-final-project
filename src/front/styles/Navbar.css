@@ -19,6 +19,7 @@
 
 .navbar span {
   color: var(--text-yellow);
+  
 }
 
 .nav-links {
@@ -32,6 +33,7 @@
 .nav-links a {
   color: var(--text-yellow);
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .nav-links a:hover {
@@ -86,6 +88,10 @@
 
 #profile-menu {
   padding: 10px;
+  
+}
+.profile-menu {
+  text-decoration: none;
 }
 
 #sign-out-button:hover {
@@ -96,10 +102,13 @@
 
 #genre {
   color: var(--text-yellow);
+  text-decoration: none;
 }
 
 
-
+#edit-profile:hover{
+  color: white;
+}
 
 
 

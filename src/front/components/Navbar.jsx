@@ -103,7 +103,7 @@ export const Navbar = () => {
 								/>
 							</button>
 							<ul className="dropdown-menu" id="profile-menu">
-								<li><Link to="/profile" className="dropdown-item">Edit Profile</Link></li>
+								<li><Link to="/profile" className="dropdown-item" id="edit-profile">Edit Profile</Link></li>
 								<li>
 									<button onClick={handleLogout} className="dropdown-item" id = "sign-out-button">
 										Sign Out <i className="fa-solid fa-right-from-bracket ms-2"></i>
