@@ -95,6 +95,7 @@ export const Navbar = () => {
 								type="button"
 								data-bs-toggle="dropdown"
 								aria-expanded="false"
+								id="profile-name"
 							>
 								<span>{store.user?.full_name || "Guest"}</span>
 								<img
