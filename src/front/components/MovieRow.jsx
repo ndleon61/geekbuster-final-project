@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import useGlobalReducer from "../hooks/useGlobalReducer";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import "../styles/MovieRow.css";
@@ -9,6 +10,19 @@ const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
 const MovieRow = ({ title, endpoint }) => {
   const [movies, setMovies] = useState([]);
+  const { dispatch, store } = useGlobalReducer();
+
+
+  const handleFavoriteToggle = (movie) => {
+    dispatch({
+      type: "toggle_favorite",
+      payload: {
+        id: movie.id,
+        title: movie.title,
+        poster_path: movie.poster_path,
+      },
+    });
+  };
 
   useEffect(() => {
     if (!endpoint) return;
@@ -27,8 +41,12 @@ const MovieRow = ({ title, endpoint }) => {
       <div className="row-posters">
         {movies
           .filter((movie) => movie.poster_path)
-          .map((movie) => (
-            <div key={movie.id} className="movie-card">
+          .map((movie) => {
+            const isFavorite = store.favorites.some(
+              (fav) => String(fav.id) === String(movie.id)
+            );
+
+            return <div key={movie.id} className="movie-card">
               <img
                 className="row-poster"
                 src={`${IMG_BASE}${movie.poster_path}`}
@@ -38,8 +56,14 @@ const MovieRow = ({ title, endpoint }) => {
               <Link to={`/movie/${movie.id}`} className="details-button">
                 View Details
               </Link>
+              <button
+                className="btn btn-sm btn-outline-warning"
+                onClick={() => handleFavoriteToggle(movie)}
+              >
+                <i className={`fa ${isFavorite ? "fa-solid fa-star" : "fa-regular fa-star"}`} />
+              </button>
             </div>
-          ))}
+          })}
       </div>
     </div>
   );
