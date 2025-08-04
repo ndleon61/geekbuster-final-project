@@ -4,9 +4,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import "../styles/MovieRow.css";
 
+const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
+const BASE_URL = "https://api.themoviedb.org/3";
 const IMG_BASE = "https://image.tmdb.org/t/p/w500";
 
-const MovieRow = ({ title, fetchUrl }) => {
+const MovieRow = ({ title, endpoint }) => {
   const [movies, setMovies] = useState([]);
   const { dispatch, store } = useGlobalReducer();
 
@@ -23,13 +25,15 @@ const MovieRow = ({ title, fetchUrl }) => {
   };
 
   useEffect(() => {
-    if (!fetchUrl) return;
+    if (!endpoint) return;
+
+    const fetchUrl = `${BASE_URL}${endpoint}?api_key=${API_KEY}&language=en-US&page=1`;
 
     axios
       .get(fetchUrl)
       .then((res) => setMovies(res.data.results))
       .catch((err) => console.error("Error fetching movies:", err));
-  }, [fetchUrl]);
+  }, [endpoint]);
 
   return (
     <div className="row">

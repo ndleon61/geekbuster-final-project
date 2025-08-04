@@ -1,15 +1,13 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import useGlobalReducer from '../hooks/useGlobalReducer';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import "../styles/Signup.css"
 
 const Signup = () => {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [fullName, setFullName] = useState("");
+    const [securityQuestion, setSecurityQuestion] = useState("What is your mother's maiden name?");
+    const [securityAnswer, setSecurityAnswer] = useState("");
 
     const navigate = useNavigate();
 
@@ -21,11 +19,17 @@ const Signup = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ email, password, full_name: fullName })
+                body: JSON.stringify({ 
+                    email, 
+                    password, 
+                    full_name: fullName,
+                    security_question: securityQuestion,
+                    security_answer: securityAnswer
+                })
             });
 
             if (res.ok) {
-                alert("Signup successfull");
+                alert("Signup successful");
                 navigate("/");
             } else {
                 const errorData = await res.json();
@@ -33,23 +37,23 @@ const Signup = () => {
             }
         } catch (err) {
             console.error(err);
-            alert("An error occured during signup")
+            alert("An error occurred during signup");
         }
-    }
+    };
 
-    return (
-        <div className='signup-page'>
-            <form className='signup-form-container' onSubmit={handleSubmit}>
-                <h2>Sign Up</h2>
-                <input type="name" placeholder='Full Name' onChange={(e) => setFullName(e.target.value)} />
-                <input type="email" placeholder='Email' required onChange={(e) => setEmail(e.target.value)} />
-                <input type="password" placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />
-
-                <button type='submit' className='btn btn-success'>Register</button>
-                <p>Already a member? <Link to="/">Login instead</Link></p>
-            </form>
-        </div>
-    )
+  return (
+     <div className='signup-page'>
+        <form  className='signup-form-container' onSubmit={handleSubmit}>
+        <h2>Sign Up</h2>
+        <input type="name" placeholder='Full Name' onChange={(e) => setFullName(e.target.value)} />
+        <input type="email"  placeholder='Email' required onChange={(e) => setEmail(e.target.value)}/>
+        <input type="password"  placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />
+        
+        <button type='submit' className='btn btn-success'>Register</button>
+        <p>Already a member? <Link to="/">Login instead</Link></p>
+    </form>
+     </div>
+  )
 };
 
 export default Signup;

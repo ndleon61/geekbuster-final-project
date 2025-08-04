@@ -19,6 +19,7 @@
 
 .navbar span {
   color: var(--text-yellow);
+  
 }
 
 .nav-links {
@@ -32,6 +33,7 @@
 .nav-links a {
   color: var(--text-yellow);
   transition: all 0.3s ease;
+  text-decoration: none;
 }
 
 .nav-links a:hover {
@@ -77,6 +79,41 @@
   cursor: pointer;
 }
 
+#sign-out-button {
+
+  color: red;
+  border-radius: 10px;
+
+}
+
+#profile-menu {
+  padding: 10px;
+  
+}
+.profile-menu {
+  text-decoration: none;
+}
+
+#sign-out-button:hover {
+  background-color: red;
+  color: white;
+
+}
+
+#genre {
+  color: var(--text-yellow);
+  text-decoration: none;
+}
+
+
+#edit-profile:hover{
+  color: white;
+}
+
+
+#profile-name {
+  text-decoration: none;
+}
 
 @media (max-width: 768px) {
   .navbar-brand {

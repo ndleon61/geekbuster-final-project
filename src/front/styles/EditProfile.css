@@ -1,0 +1,183 @@
+.profile {
+    text-align: center;
+    padding: 2rem;
+    max-width: 600px;
+    margin: 2rem auto;
+    background-color: rgb(25, 25, 25);
+    color: var(--text-yellow); 
+    border: 1px solid white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.profile-picture {
+    width: 120px;
+    height: 120px;
+    border-radius: 15px;
+    object-fit: cover;
+    border: 3px solid #FFD700;
+    margin-bottom: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    
+}
+
+.images {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.image-container {
+  text-align: center;
+}
+
+.option-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    object-fit: cover;
+    border: 2px solid #ccc;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.option-avatar:hover {
+    transform: scale(1.05);
+    border-color: #f0ad4e;
+}
+
+.option-avatar.selected {
+    border: 3px solid var(--text-yellow);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.btn-select {
+    background-color: var(--text-yellow);
+    color: var(--background-blue);
+    border: none;
+    margin-top: 1rem;
+}
+
+.mt-3 {
+  margin-top: 1rem !important;
+}
+
+.btn-password {
+    margin-top: 2rem;
+}
+
+.password-reset-form {
+  max-width: 400px;
+}
+
+.password-reset-form input {
+  width: 100%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 480px) {
+  .images {
+    gap: 0.75rem;
+  }
+
+  .option-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  .image-container {
+    max-width: 90px;
+  }
+}
+
+.password-reset-form {
+  display: flex;
+  flex-direction: column;
+  margin-left: auto;
+  margin-right: auto;
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+.floating-icons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.floating-icon {
+  position: absolute;
+  font-size: 2.5rem;
+  opacity: 0.08;
+  color: var(--text-yellow); /* Replace with your theme color if needed */
+}
+
+/* Animation Variants */
+.float1 { animation: float1 25s linear infinite; }
+.float2 { animation: float2 30s linear infinite; }
+.float3 { animation: float3 35s linear infinite; }
+.float4 { animation: float4 20s linear infinite; }
+.float5 { animation: float5 40s linear infinite; }
+.float6 { animation: float6 28s linear infinite; }
+
+/* Position examples (can be adjusted freely) */
+.icon1 { top: 10%; left: -5%; }
+.icon2 { top: 30%; left: -10%; }
+.icon3 { top: 50%; left: -15%; }
+.icon4 { top: 70%; left: -8%; }
+.icon5 { top: 85%; left: -20%; }
+.icon6 { top: 25%; left: -12%; }
+
+.float-delay-1 { animation-delay: 0s; }
+.float-delay-2 { animation-delay: 3s; }
+.float-delay-3 { animation-delay: 6s; }
+
+.float-speed-1 { animation-duration: 25s; }
+.float-speed-2 { animation-duration: 35s; }
+.float-speed-3 { animation-duration: 45s; }
+
+/* Keyframes */
+@keyframes floatFadeScale {
+  0% {
+    opacity: 0.1;
+    transform: translateX(-10vw) scale(1) rotate(0deg);
+  }
+  25% {
+    opacity: 0.2;
+    transform: translateX(30vw) scale(1.2) rotate(90deg);
+  }
+  50% {
+    opacity: 0.15;
+    transform: translateX(60vw) scale(0.9) rotate(180deg);
+  }
+  75% {
+    opacity: 0.2;
+    transform: translateX(90vw) scale(1.3) rotate(270deg);
+  }
+  100% {
+    opacity: 0.1;
+    transform: translateX(120vw) scale(1) rotate(360deg);
+  }
+}

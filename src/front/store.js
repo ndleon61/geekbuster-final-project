@@ -2,6 +2,7 @@ export const initialStore = () => {
   const token = localStorage.getItem("token");
   const user = localStorage.getItem("user");
   const favorites = localStorage.getItem("favorites");
+  const selectedImage = localStorage.getItem("selected_image"); // ✅ Retrieve saved image
 
   return {
     token: token || null,
@@ -15,7 +16,8 @@ export const initialStore = () => {
       image_2: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Netflix-avatar.png",
       image_3: "https://wallpapers.com/images/featured/netflix-profile-pictures-w3lqr61qe57e9yt8.jpg",
       image_4: "https://i.pinimg.com/564x/a4/c6/5f/a4c65f709d4c0cb1b4329c12beb9cd78.jpg",
-      image_5: "https://i.pinimg.com/564x/b2/a0/29/b2a029a6c2757e9d3a09265e3d07d49d.jpg"
+      image_5: "https://i.pinimg.com/564x/b2/a0/29/b2a029a6c2757e9d3a09265e3d07d49d.jpg",
+      selected: selectedImage || null
     }
   };
 };
@@ -70,7 +72,17 @@ export default function storeReducer(store, action = {}) {
         ...store,
         favorites: updatedFavorites,
       };
-    }
+    };
+
+    case "set_image":
+      localStorage.setItem("selected_image", action.payload); // ✅ Save selected image
+      return {
+        ...store,
+        image: {
+          ...store.image,
+          selected: action.payload,
+        }
+      };
 
     default:
       console.error("Unknown action type:", action.type);
