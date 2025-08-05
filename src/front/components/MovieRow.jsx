@@ -24,16 +24,21 @@ const MovieRow = ({ title, endpoint }) => {
     });
   };
 
-  useEffect(() => {
-    if (!endpoint) return;
+ useEffect(() => {
+  if (!endpoint) return;
 
-    const fetchUrl = `${BASE_URL}${endpoint}?api_key=${API_KEY}&language=en-US&page=1`;
+  const fetchMovies = async () => {
+    try {
+      const fetchUrl = `${BASE_URL}${endpoint}?api_key=${API_KEY}&language=en-US&page=1`;
+      const res = await axios.get(fetchUrl);
+      setMovies(res.data.results);
+    } catch (err) {
+      console.error("Error fetching movies:", err);
+    }
+  };
 
-    axios
-      .get(fetchUrl)
-      .then((res) => setMovies(res.data.results))
-      .catch((err) => console.error("Error fetching movies:", err));
-  }, [endpoint]);
+  fetchMovies();
+}, [endpoint]);
 
   return (
     <div className="row">

@@ -48,6 +48,12 @@ const Signup = () => {
         <input type="name" placeholder='Full Name' onChange={(e) => setFullName(e.target.value)} />
         <input type="email"  placeholder='Email' required onChange={(e) => setEmail(e.target.value)}/>
         <input type="password"  placeholder='Password' required onChange={(e) => setPassword(e.target.value)} />
+        <select value={securityQuestion} onChange={(e) => setSecurityQuestion(e.target.value)} required>
+                    <option value="What is your mother's maiden name?">What is your mother's maiden name?</option>
+                    <option value="What was your first pet's name?">What was your first pet's name?</option>
+                    <option value="What city were you born in?">What city were you born in?</option>
+                </select>
+                <input type="text" placeholder="Answer to security question" onChange={(e) => setSecurityAnswer(e.target.value)} required />
         
         <button type='submit' className='btn btn-success'>Register</button>
         <p>Already a member? <Link to="/">Login instead</Link></p>
