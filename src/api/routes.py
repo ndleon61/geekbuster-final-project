@@ -3,7 +3,7 @@ This module handles API endpoints like signup, login, and favorites.
 """
 from flask import request, jsonify, Blueprint
 from flask_cors import CORS
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from api.models import db, User, FavoriteMovie
@@ -34,11 +34,10 @@ def signup():
     if User.query.filter_by(email=data["email"]).first():
         return jsonify({"msg": "User already exists"}), 400
 
-    hashed_pw = generate_password_hash(data["password"])
     hashed_answer = generate_password_hash(data["security_answer"])
     new_user = User(
         email=data["email"],
-        password=hashed_pw,
+        password=data["password"],
         full_name=data["full_name"],
         security_question=data["security_question"],
         security_answer=hashed_answer,
@@ -58,10 +57,10 @@ def login():
         return jsonify({"msg": "Email and password are required"}), 400
 
     user = User.query.filter_by(email=data["email"]).first()
-    if not user or not check_password_hash(user.password, data["password"]):
+    if not user or not user.check_password_hash(data["password"]):
         return jsonify({"msg": "Invalid credentials"}), 401
 
-    token = create_access_token(identity= str(user.id))
+    token = create_access_token(user)
     return jsonify(access_token=token, user = user.serialize()), 200
 
 #Gets favorites by ID
@@ -83,8 +82,7 @@ def get_favorite(id):
 @api.route('/favorites', methods=['GET'])
 @jwt_required()
 def get_favorites():
-    user_id = get_jwt_identity()
-    favorites = FavoriteMovie.query.filter_by(user_id=user_id).all()
+    favorites = get_current_user().favorites
     return jsonify([fav.serialize() for fav in favorites]), 200
 
 #Adds a favorite

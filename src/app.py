@@ -46,6 +46,15 @@ db.init_app(app)
 MIGRATE = Migrate(app, db, compare_type=True)
 jwt = JWTManager(app)
 
+@jwt.user_identity_loader
+def user_identity(user):
+    return user.id
+
+@jwt.user_lookup_loader
+def user_lookup(_jwt_header, jwt_data):
+    identity = jwt_data["sub"]
+    return User.query.filter_by(id=identity).first()
+
 # Setup admin panel and CLI commands
 setup_admin(app)
 setup_commands(app)
