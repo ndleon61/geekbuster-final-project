@@ -34,11 +34,10 @@ def signup():
     if User.query.filter_by(email=data["email"]).first():
         return jsonify({"msg": "User already exists"}), 400
 
-    hashed_pw = generate_password_hash(data["password"])
     hashed_answer = generate_password_hash(data["security_answer"])
     new_user = User(
         email=data["email"],
-        password=hashed_pw,
+        password=data["password"],
         full_name=data["full_name"],
         security_question=data["security_question"],
         security_answer=hashed_answer,
@@ -58,7 +57,7 @@ def login():
         return jsonify({"msg": "Email and password are required"}), 400
 
     user = User.query.filter_by(email=data["email"]).first()
-    if not user or not check_password_hash(user.password, data["password"]):
+    if not user or not user.check_password_hash(data["password"]):
         return jsonify({"msg": "Invalid credentials"}), 401
 
     token = create_access_token(identity= str(user.id))
