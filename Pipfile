@@ -22,6 +22,7 @@ flask-jwt-extended = "*"
 werkzeug = "*"
 requests = "*"
 flask-cors = "*"
+tomli = "*"
 
 [requires]
 python_version = "3.13"
