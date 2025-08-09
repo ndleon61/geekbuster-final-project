@@ -1,7 +1,7 @@
 import os
 import requests
 
-VITE_TMDB_API_KEY = os.getenv("VITE_VITE_TMDB_API_KEY")
+VITE_TMDB_API_KEY = os.getenv("VITE_TMDB_API_KEY")
 TMDB_BASE_URL = "https://api.themoviedb.org/3"
 TMDB_GENRES = {
     "Action": 28,

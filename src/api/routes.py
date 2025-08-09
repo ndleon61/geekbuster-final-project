@@ -190,12 +190,10 @@ def get_movies_by_genre_name():
     genre_id = TMDB_GENRES.get(genre_name.title())
     if not genre_id:
         return jsonify({"error": f"Genre '{genre_name}' not recognized"}), 400
+    data = search_movies_by_genre(genre_id)
+    return jsonify(data), 200
 
-    try:
-        data = search_movies_by_genre(genre_id)
-        return jsonify(data), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    
 
 # Reset Password
 
