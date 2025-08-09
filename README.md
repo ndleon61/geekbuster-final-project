@@ -1,81 +1,108 @@
-# WebApp boilerplate with React JS and Flask API
+🎬 GeekBuster Movies
+GeekBuster Movies is a full-stack movie discovery and management application inspired by the nostalgic Blockbuster experience.
+Browse trending, popular, and top-rated films, search for specific titles, view details, and manage your own favorites list — all with a secure login system.
 
-Build web applications using React.js for the front end and python/flask for your backend API.
+🚀 Features
+Frontend
+Browse movies by category (Popular, Top Rated, Now Playing, Upcoming).
+Search movies by title using the TMDb API.
+View detailed information including synopsis, poster, rating, and trailers.
+Add or remove movies from your personal favorites list.
+Responsive design for desktop and mobile.
+Backend
+User authentication with hashed passwords and JWT tokens.
+CRUD operations for user favorites.
+RESTful API with Flask and SQLAlchemy.
+CORS enabled for frontend–backend communication.
+🛠️ Tech Stack
+Frontend:
 
-- Documentation can be found here: https://4geeks.com/docs/start/react-flask-template
-- Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
-- Integrated with Pipenv for package managing.
-- Fast deployment to Render [in just a few steps here](https://4geeks.com/docs/start/deploy-to-render-com).
-- Use of .env file.
-- SQLAlchemy integration for database abstraction.
+React.js (Vite)
+React Router DOM
+Context API + useReducer
+CSS Modules & global variables for theme styling
+Backend:
 
-### 1) Installation:
+Python 3 + Flask
+SQLAlchemy ORM
+Flask-Migrate
+Flask-JWT-Extended
+PostgreSQL / SQLite
+External API:
 
-> If you use Github Codespaces (recommended) or Gitpod this template will already come with Python, Node and the Posgres Database installed. If you are working locally make sure to install Python 3.10, Node 
+TMDb API – https://www.themoviedb.org/documentation/api
+⚙️ Installation
+Backend Setup
+Recommended: Install backend first
+Requirements: Python 3.10, Pipenv, Database engine (PostgreSQL recommended)
 
-It is recomended to install the backend first, make sure you have Python 3.10, Pipenv and a database engine (Posgress recomended)
+# Install backend dependencies
+pipenv install
 
-1. Install the python packages: `$ pipenv install`
-2. Create a .env file based on the .env.example: `$ cp .env.example .env`
-3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
+# Create .env file
+cp .env.example .env
+# Add your DATABASE_URL and JWT_SECRET_KEY
 
-| Engine    | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
-| SQLite    | sqlite:////test.db                                  |
-| MySQL     | mysql://username:password@localhost:port/example    |
-| Postgress | postgres://username:password@localhost:5432/example |
+# Run migrations
+pipenv run migrate
+pipenv run upgrade
 
-4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
-5. Run the migrations: `$ pipenv run upgrade`
-6. Run the application: `$ pipenv run start`
+# Start backend server
+pipenv run start
+Database URLs Examples
+Engine	Example URL
+SQLite	sqlite:////test.db
+MySQL	mysql://username:password@localhost:port/example
+Postgres	postgres://username:password@localhost:5432/example
+Frontend Setup
+Requirements: Node.js v20
 
-> Note: Codespaces users can connect to psql by typing: `psql -h localhost -U gitpod example`
+# Install frontend dependencies
+npm install
 
-### Undo a migration
+# Create .env file
+cp .env.example .env
+# Add your VITE_BACKEND_URL and VITE_TMDB_API_KEY
 
-You are also able to undo a migration by running
+# Start frontend
+npm run start
+📡 API Endpoints
+Auth
+Method	Endpoint	Description
+POST	/signup	Create a new user
+POST	/login	Authenticate user & return JWT
+Favorites
+Method	Endpoint	Description
+GET	/favorites	List all user favorites
+POST	/favorites	Add a movie to favorites
+DELETE	/favorites/	Remove a movie from favorites
+🗂️ Project Structure
+/src
+  /api
+    models.py      # Database models
+    routes.py      # API endpoints
+  /front
+    /components    # Reusable components
+    /pages         # Page views
+    /styles        # CSS styles
+    store.js       # Global state reducer
+🔑 Environment Variables
+Backend
 
-```sh
-$ pipenv run downgrade
-```
+FLASK_APP=src/app.py
+DATABASE_URL=sqlite:////test.db
+JWT_SECRET_KEY=your_secret_key
+Frontend
 
-### Backend Populate Table Users
-
-To insert test users in the database execute the following command:
-
-```sh
-$ flask insert-test-users 5
-```
-
-And you will see the following message:
-
-```
-  Creating test users
-  test_user1@test.com created.
-  test_user2@test.com created.
-  test_user3@test.com created.
-  test_user4@test.com created.
-  test_user5@test.com created.
-  Users created successfully!
-```
-
-### **Important note for the database and the data inside it**
-
-Every Github codespace environment will have **its own database**, so if you're working with more people eveyone will have a different database and different records inside it. This data **will be lost**, so don't spend too much time manually creating records for testing, instead, you can automate adding records to your database by editing ```commands.py``` file inside ```/src/api``` folder. Edit line 32 function ```insert_test_data``` to insert the data according to your model (use the function ```insert_test_users``` above as an example). Then, all you need to do is run ```pipenv run insert-test-data```.
-
-### Front-End Manual Installation:
-
--   Make sure you are using node version 20 and that you have already successfully installed and runned the backend.
-
-1. Install the packages: `$ npm install`
-2. Start coding! start the webpack dev server `$ npm run start`
-
-## Publish your website!
-
-This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter of minutes. Please read the [official documentation about it](https://4geeks.com/docs/start/deploy-to-render-com).
-
-### Contributors
-
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
-
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
+VITE_BACKEND_URL=http://localhost:3001/api
+VITE_TMDB_API_KEY=your_tmdb_api_key
+🎯 Future Improvements
+User profiles with avatars and bios.
+Watchlist and “watched” tracking.
+Advanced search filters (genre, release year).
+User-submitted reviews and ratings.
+👨‍💻 Contributors
+David Leon – Full Stack Developer
+Built as part of the 4Geeks Academy Full Stack Developer Bootcamp (https://4geeks.com).
+📜 License
+MIT License
