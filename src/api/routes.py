@@ -1,6 +1,7 @@
 """
 This module handles API endpoints like signup, login, and favorites.
 """
+from flask_cors import cross_origin
 from flask import request, jsonify, Blueprint
 from flask_cors import CORS
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_current_user
@@ -11,25 +12,30 @@ from api.utils import generate_sitemap, APIException
 from api.services.tmdb import get_popular_movies, get_movie_details, search_movies_by_title, search_movies_by_genre
 from api.services.tmdb import TMDB_GENRES
 from sqlalchemy.exc import SQLAlchemyError
+import requests
+import os
 
 
 api = Blueprint('api', __name__)
 CORS(api)
 
 # Hello route (default)
+
+
 @api.route('/hello', methods=['GET'])
 def handle_hello():
     return jsonify({"message": "Hello from the backend!"}), 200
 
+
 # Signup route
-from flask_cors import cross_origin
+
 
 @api.route('/signup', methods=['POST'])
 def signup():
     data = request.get_json()
 
     if not data or not data.get("email") or not data.get("password") or not data.get("full_name") or not data.get("security_question") or not data.get("security_answer"):
-     return jsonify({"msg": "Email, password, full name, security question, and answer are required"}), 400
+        return jsonify({"msg": "Email, password, full name, security question, and answer are required"}), 400
 
     if User.query.filter_by(email=data["email"]).first():
         return jsonify({"msg": "User already exists"}), 400
@@ -49,6 +55,8 @@ def signup():
     return jsonify({"msg": "User created"}), 201
 
 # Login route
+
+
 @api.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
@@ -61,9 +69,11 @@ def login():
         return jsonify({"msg": "Invalid credentials"}), 401
 
     token = create_access_token(user)
-    return jsonify(access_token=token, user = user.serialize()), 200
+    return jsonify(access_token=token, user=user.serialize()), 200
 
-#Gets favorites by ID
+# Gets favorites by ID
+
+
 @api.route('/favorites/<int:id>', methods=['GET'])
 @jwt_required()
 def get_favorite(id):
@@ -78,14 +88,18 @@ def get_favorite(id):
 
     return jsonify(favorite.serialize()), 200
 
-#Gets all favorites
+# Gets all favorites
+
+
 @api.route('/favorites', methods=['GET'])
 @jwt_required()
 def get_favorites():
     favorites = get_current_user().favorites
     return jsonify([fav.serialize() for fav in favorites]), 200
 
-#Adds a favorite
+# Adds a favorite
+
+
 @api.route('/favorites', methods=['POST'])
 @jwt_required()
 def add_favorite():
@@ -95,17 +109,21 @@ def add_favorite():
 
     user_id = get_jwt_identity()
 
-    existing_fav = FavoriteMovie.query.filter_by(tmdb_id=data["tmdb_id"], user_id=user_id).first()
+    existing_fav = FavoriteMovie.query.filter_by(
+        tmdb_id=data["tmdb_id"], user_id=user_id).first()
     if existing_fav:
         return jsonify({"msg": "Movie already favorited"}), 409
 
-    new_fav = FavoriteMovie(tmdb_id=data["tmdb_id"], title=data["title"], user_id=user_id)
+    new_fav = FavoriteMovie(
+        tmdb_id=data["tmdb_id"], title=data["title"], user_id=user_id)
     db.session.add(new_fav)
     db.session.commit()
 
     return jsonify(new_fav.serialize()), 201
 
-#Deletes a favorite
+# Deletes a favorite
+
+
 @api.route('/favorites/<int:id>', methods=['DELETE'])
 @jwt_required()
 def delete_favorite(id):
@@ -122,7 +140,9 @@ def delete_favorite(id):
     db.session.commit()
     return jsonify({"msg": "Favorite deleted"}), 200
 
-#Gets all popular movies. This will be used for the homepage 
+# Gets all popular movies. This will be used for the homepage
+
+
 @api.route('/movies/popular', methods=['GET'])
 def popular_movies():
     page = request.args.get("page", 1)
@@ -132,7 +152,9 @@ def popular_movies():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-#Gets movie by ID
+# Gets movie by ID
+
+
 @api.route('/movies/<int:movie_id>', methods=['GET'])
 def movie_details(movie_id):
     try:
@@ -141,10 +163,12 @@ def movie_details(movie_id):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-#Gets movie by title   
+# Gets movie by title
+
+
 @api.route('/movies/search/title', methods=['GET'])
 def search_movies():
-    title = request.args.get("query") 
+    title = request.args.get("query")
     if not title:
         return jsonify({"error": "Query parameter 'query' is required"}), 400
 
@@ -153,9 +177,9 @@ def search_movies():
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
 
-#Gets movie by genre    
+
+# Gets movie by genre
 @api.route('/movies/genre', methods=['GET'])
 def get_movies_by_genre_name():
     genre_name = request.args.get("query")
@@ -172,8 +196,10 @@ def get_movies_by_genre_name():
         return jsonify(data), 200
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-    
-#Reset Password
+
+# Reset Password
+
+
 @api.route('/reset-password', methods=['POST'])
 def reset_password():
     data = request.get_json()
@@ -204,3 +230,20 @@ def reset_password():
     except SQLAlchemyError:
         db.session.rollback()
         return jsonify({"msg": "Database error occurred"}), 500
+
+
+@api.route('/tmdb/<path:route>')
+def tmbd(route):
+    api_key = os.getenv("VITE_TMDB_API_KEY")
+    res = requests.request(
+        url=f"https://api.themoviedb.org/3/{route}",
+        method=request.method,
+        params={
+            **request.args,
+            "api_key": api_key
+        },
+        json=request.get_json(silent=True, force=True),
+        headers={"Content-Type",
+                 request.headers.get("Content-Type", "text/plain")}
+    )
+    return jsonify(res.json())

@@ -20,9 +20,9 @@ flask-migrate = "*"
 python-dotenv = "*"
 flask-jwt-extended = "*"
 werkzeug = "*"
-requests = "*"
 flask-cors = "*"
 tomli = "*"
+requests = "*"
 
 [requires]
 python_version = "3.13"
